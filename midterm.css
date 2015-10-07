@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css?family=Architects+Daughter');
+
+body {
+  background-color: gainsboro;
+}
+
+
+header {
+  margin: auto;
+  width: 200px;
+  height: 200px;
+  background: Gold;
+  border-radius: 100px / 100px; /*half of width and height*/
+  text-align: center;
+  font-family: 'Architects Daughter';
+}
+
+h1 {
+  padding-top: 50px;
+}
+
+/*.summary, .preamble, .explanation, .participation, .benefits, .requirements {
+  border:1px solid black;
+  width:66%;
+  float:left;
+}*/
+
+.preamble {
+  /*width: 500px;
+  height: 500px;*/
+}
+
+.preamble h3, .preamble p{
+  margin: auto;
+  width: 150px;
+  height: 250px;
+  background: YellowGreen;
+  border: 5px DarkGreen solid;
+  border-radius: 75px / 150px; /*half of width and height*/
+  text-align: center;
+  padding-top: 50px;
+  transition: all 0.5s ease-in-out;
+}
+
+.preamble:first-child p {
+  position: relative;
+  top: -300px;
+  left: 20px;
+  z-index: -1;
+}
+.preamble:nth-child(2) p {
+  position: relative;
+  top: -300px;
+  left: 40px;
+  z-index: -2;
+}
+.preamble:nth-child(3) p {
+  position: relative;
+  top: -400px;
+  left: 60px;
+  z-index: -3;
+}
+
+
+/*#zen-preamble:hover p {
+  transform: rotate(30deg);
+}*/
+
+h3:hover ~ p {
+    transform: rotate(30deg);
+}
+
+footer {
+  display:none;
+}
+
+aside {
+  border:1px solid black;
+  width:30%;
+  margin-left:67%;
+}
+
+@media all and (width:320px) {
+  body {
+    background-color:orange;
+  }
+
+  .summary, .preamble, .explanation, .participation, .benefits, .requirements {
+    width:auto;
+    float:none;
+  }
+
+  aside {
+    width:auto;
+    margin-left:0;
+  }
+
+}
