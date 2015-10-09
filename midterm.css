@@ -20,11 +20,13 @@ h1 {
   padding-top: 50px;
 }
 
-/*.summary, .preamble, .explanation, .participation, .benefits, .requirements {
-  border:1px solid black;
-  width:66%;
-  float:left;
-}*/
+.page-wrapper{
+  margin: auto;
+  width: 20%;
+  height: 100%;
+  background-color: #332101;
+}
+
 #zen-supporting{
   display: flex;
   flex-direction: row;
@@ -54,6 +56,7 @@ h3{
   border-radius: 75px / 150px; /*half of width and height*/
   text-align: center;
   padding-top: 50px;
+  z-index: 1;
 }
 p{
   position: absolute;
@@ -70,19 +73,24 @@ p{
   text-align: center;
   padding-top: 50px;
   transition: all 0.5s ease-in-out;
+  z-index: 0;
 }
 
 p:nth-child(2) {
   left: 40%;
-  z-index: -1;
 }
 p:nth-child(3) {
   left: 45%;
-  z-index: -2;
 }
 p:nth-child(4) {
   left: 20%;
-  z-index: -3;
+
+}
+p:nth-child(5) {
+  left: 15%;
+}
+p:nth-child(6) {
+  left: 10%;
 }
 
 /*choose all adjacent p's to h3*/
@@ -104,6 +112,16 @@ div[role=article]:hover p:nth-child(3) {
 }
 div[role=article]:hover p:nth-child(4) {
     transform: rotate(-30deg);
+
+    transform-origin: 50% 110%;
+}
+div[role=article]:hover p:nth-child(5) {
+    transform: rotate(-50deg);
+
+    transform-origin: 50% 110%;
+}
+div[role=article]:hover p:nth-child(6) {
+    transform: rotate(-60deg);
 
     transform-origin: 50% 110%;
 }
