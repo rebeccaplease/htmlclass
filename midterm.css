@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Architects+Daughter');
 
 body {
-  background-color: gainsboro;
+  background-color: SkyBlue;
+  font-family: 'Architects Daughter';
 }
 
 
@@ -12,7 +13,7 @@ header {
   background: Gold;
   border-radius: 100px / 100px; /*half of width and height*/
   text-align: center;
-  font-family: 'Architects Daughter';
+
 }
 
 h1 {
@@ -24,16 +25,45 @@ h1 {
   width:66%;
   float:left;
 }*/
+#zen-supporting{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
 
-.preamble {
-  /*width: 500px;
-  height: 500px;*/
 }
 
-.preamble h3, .preamble p{
+.preamble, #zen-explanation, #zen-participation, #zen-requirements {
+  position: relative;
+  display: block;
   margin: auto;
+  height: 400px;
+  width: 300px;
+}
+
+h3{
+  position: absolute;
+  top: 10%;
+  left: 30%;
+
+  display: inline-block;
   width: 150px;
   height: 250px;
+  background: YellowGreen;
+  border: 5px DarkGreen solid;
+  border-radius: 75px / 150px; /*half of width and height*/
+  text-align: center;
+  padding-top: 50px;
+}
+p{
+  position: absolute;
+  top: 10%;
+
+  display: inline-block;
+  width: 150px;
+  height: 250px;
+  margin-bottom: 0;
+
   background: YellowGreen;
   border: 5px DarkGreen solid;
   border-radius: 75px / 150px; /*half of width and height*/
@@ -42,34 +72,41 @@ h1 {
   transition: all 0.5s ease-in-out;
 }
 
-.preamble:first-child p {
-  position: relative;
-  top: -300px;
-  left: 20px;
+p:nth-child(2) {
+  left: 40%;
   z-index: -1;
 }
-.preamble:nth-child(2) p {
-  position: relative;
-  top: -300px;
-  left: 40px;
+p:nth-child(3) {
+  left: 45%;
   z-index: -2;
 }
-.preamble:nth-child(3) p {
-  position: relative;
-  top: -400px;
-  left: 60px;
+p:nth-child(4) {
+  left: 20%;
   z-index: -3;
 }
 
+/*choose all adjacent p's to h3*/
+/*h3:hover ~ p {
+    transform: rotate(30deg);
 
-/*#zen-preamble:hover p {
-  transform: rotate(30deg);
+    transform-origin: 50% 85%;
 }*/
 
-h3:hover ~ p {
+div[role=article]:hover p:nth-child(2) {
     transform: rotate(30deg);
-}
 
+    transform-origin: 50% 110%;
+}
+div[role=article]:hover p:nth-child(3) {
+    transform: rotate(50deg);
+
+    transform-origin: 50% 110%;
+}
+div[role=article]:hover p:nth-child(4) {
+    transform: rotate(-30deg);
+
+    transform-origin: 50% 110%;
+}
 footer {
   display:none;
 }
