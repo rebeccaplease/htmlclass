@@ -5,7 +5,6 @@ body {
   font-family: 'Architects Daughter';
 }
 
-
 header {
   margin: auto;
   width: 200px;
@@ -13,18 +12,21 @@ header {
   background: Gold;
   border-radius: 100px / 100px; /*half of width and height*/
   text-align: center;
-
 }
 
 h1 {
   padding-top: 50px;
 }
 
-.page-wrapper{
+.page-wrapper {
   margin: auto;
   width: 20%;
   height: 100%;
   background-color: #332101;
+}
+/*ovveride p format*/
+.summary p{
+
 }
 
 #zen-supporting{
@@ -32,7 +34,6 @@ h1 {
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-
 }
 
 .preamble, #zen-explanation, #zen-participation, #zen-requirements {
@@ -74,6 +75,7 @@ p{
   padding-top: 50px;
   transition: all 0.5s ease-in-out;
   z-index: 0;
+  color: transparent;
 }
 
 p:nth-child(2) {
@@ -84,7 +86,6 @@ p:nth-child(3) {
 }
 p:nth-child(4) {
   left: 20%;
-
 }
 p:nth-child(5) {
   left: 15%;
@@ -100,31 +101,27 @@ p:nth-child(6) {
     transform-origin: 50% 85%;
 }*/
 
+div[role=article]:hover p{
+  color: black;
+  transform-origin: 50% 110%;
+}
+
 div[role=article]:hover p:nth-child(2) {
     transform: rotate(30deg);
-
-    transform-origin: 50% 110%;
 }
 div[role=article]:hover p:nth-child(3) {
     transform: rotate(50deg);
-
-    transform-origin: 50% 110%;
 }
 div[role=article]:hover p:nth-child(4) {
     transform: rotate(-30deg);
-
-    transform-origin: 50% 110%;
 }
 div[role=article]:hover p:nth-child(5) {
     transform: rotate(-50deg);
-
-    transform-origin: 50% 110%;
 }
 div[role=article]:hover p:nth-child(6) {
     transform: rotate(-60deg);
-
-    transform-origin: 50% 110%;
 }
+
 footer {
   display:none;
 }
