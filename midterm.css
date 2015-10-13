@@ -122,12 +122,9 @@
 
     display: inline-block;
 
-    /*width: 150px;
-    height: 250px;
-    border-radius: 75px / 150px;*/
     width: 300px;
     height: 300px;
-    border-radius: 300px 0px;
+
     margin-bottom: 0;
 
     background: YellowGreen;
@@ -143,37 +140,44 @@
     /*padding-bottom: -150px;
     padding-right: -50px;*/
 
+    border-radius: 300px 0px;
     transform-origin: 0% 100%;
+    transform: rotate(-45deg);
+
   }
 /*initial position*/
-  #zen-explanation p, #zen-benefits p {
-      border-radius: 0px 300px;
-      transform-origin: 100% 100%;
-      transform: rotate(45deg);
-    }
-  #zen-participation p, #zen-requirements p {
-      transform: rotate(-45deg);
-  }
-/*for explanation and benefits on the left*/
+/*for explanation and benefits starting on the left*/
 
-  #zen-explanation[role=article]:hover p:nth-child(2),
-  #zen-benefits[role=article]:hover p:nth-child(2) {
+  #zen-explanation p:nth-child(2n),
+  #zen-benefits p:nth-child(2n),
+  #zen-participation p:nth-child(2n+1),
+  #zen-requirements p:nth-child(2n+1) {
+    /*left*/
+    border-radius: 0px 300px;
+    transform-origin: 100% 100%;
+    transform: rotate(45deg);
+    right:50%;
+  }
+  #zen-explanation p:nth-child(2n+1),
+  #zen-benefits p:nth-child(2n+1),
+  #zen-participation p:nth-child(2n),
+  #zen-requirements p:nth-child(2n) {
+    left:50%
+}
+
+
+
+  #zen-supporting div[role=article]:hover p:first-child{
+    transform: rotate(-20deg);
+  }
+  #zen-supporting div[role=article]:hover p:nth-child(2){
     transform: rotate(0deg);
   }
-  #zen-explanation[role=article]:hover p:nth-child(3),
-  #zen-benefits[role=article]:hover p:nth-child(3){
+  #zen-supporting div[role=article]:hover p:nth-child(3){
     transform: rotate(0deg);
   }
 
 /*for participation and requirements on the right*/
-  #zen-participation[role=article]:hover p:nth-child(2),
-  #zen-requirements[role=article]:hover p:nth-child(2) {
-    transform: rotate(0deg);
-  }
-  #zen-participation[role=article]:hover p:nth-child(3),
-  #zen-requirements[role=article]:hover p:nth-child(3){
-    transform: rotate(0deg);
-  }
 
   #zen-participation[role=article]:hover p:nth-child(4),
   #zen-requirements[role=article]:hover p:nth-child(4) {
@@ -183,6 +187,11 @@
   #zen-requirements[role=article]:hover p:nth-child(5){
     transform: rotate(-30deg);
   }
+
+  p[role=contentinfo]{
+
+  }
+
   /*#zen-supporting p:nth-child(2) {
     left: 40%;
   }
