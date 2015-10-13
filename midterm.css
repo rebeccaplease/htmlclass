@@ -146,7 +146,11 @@
 
   }
 /*initial position*/
-/*for explanation and benefits starting on the left*/
+/*for explanation and benefits starting on the left
+(even leans left)
+participation and requirements on the right
+(even leans right)*/
+
 
   #zen-explanation p:nth-child(2n),
   #zen-benefits p:nth-child(2n),
@@ -156,14 +160,33 @@
     border-radius: 0px 300px;
     transform-origin: 100% 100%;
     transform: rotate(45deg);
-    right:50%;
   }
+  /*even*/
+  #zen-explanation p:nth-child(2n),
+  #zen-benefits p:nth-child(2n){
+    right: 80%;
+  }
+  /*#zen-benefits p:nth-child(2){
+    left:20%;
+  }*/
   #zen-explanation p:nth-child(2n+1),
-  #zen-benefits p:nth-child(2n+1),
+  #zen-benefits p:nth-child(2n+1){
+    left: 20%;
+  }
+
+  /*even*/
   #zen-participation p:nth-child(2n),
   #zen-requirements p:nth-child(2n) {
-    left:50%
-}
+    left: 80%;
+  }
+
+  #zen-participation p:nth-child(2n+1)
+  #zen-requirements p:nth-child(2n+1){
+    right: 20%;
+  }
+  /*#zen-participation p:nth-child(3){
+    left: 80%
+  }*/
 
 
 
