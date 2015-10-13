@@ -136,9 +136,9 @@
 
     /*overflow: scroll;*/
     padding-left: 50px;
-    padding-top: 150px;
-    /*padding-bottom: -150px;
-    padding-right: -50px;*/
+    padding-top: 130px;
+    /*padding-bottom: -150px;*/
+    padding-right: 40px;
 
     border-radius: 300px 0px;
     transform-origin: 0% 100%;
@@ -180,7 +180,7 @@ participation and requirements on the right
     left: 80%;
   }
 
-  #zen-participation p:nth-child(2n+1)
+  #zen-participation p:nth-child(2n+1),
   #zen-requirements p:nth-child(2n+1){
     right: 20%;
   }
@@ -211,8 +211,21 @@ participation and requirements on the right
     transform: rotate(-30deg);
   }
 
-  p[role=contentinfo]{
 
+
+#zen-requirements p[role=contentinfo]{
+    width: 150px;
+    height: 250px;
+    /*half of width and height*/
+    border-radius: 75px / 150px;
+    padding-top: 80px;
+    transform: rotate(0);
+    left:20%;
+    z-index: 2;
+    top:90px;
+    background: transparent;
+    border: none;
+    /*right:50%;*/
   }
 
   /*#zen-supporting p:nth-child(2) {
