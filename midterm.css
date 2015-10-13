@@ -143,10 +143,47 @@
     /*padding-bottom: -150px;
     padding-right: -50px;*/
 
-    transform-origin: -5% 100%;
+    transform-origin: 0% 100%;
+  }
+/*initial position*/
+  #zen-explanation p, #zen-benefits p {
+      border-radius: 0px 300px;
+      transform-origin: 100% 100%;
+      transform: rotate(45deg);
+    }
+  #zen-participation p, #zen-requirements p {
+      transform: rotate(-45deg);
+  }
+/*for explanation and benefits on the left*/
+
+  #zen-explanation[role=article]:hover p:nth-child(2),
+  #zen-benefits[role=article]:hover p:nth-child(2) {
+    transform: rotate(0deg);
+  }
+  #zen-explanation[role=article]:hover p:nth-child(3),
+  #zen-benefits[role=article]:hover p:nth-child(3){
+    transform: rotate(0deg);
   }
 
-  #zen-supporting p:nth-child(2) {
+/*for participation and requirements on the right*/
+  #zen-participation[role=article]:hover p:nth-child(2),
+  #zen-requirements[role=article]:hover p:nth-child(2) {
+    transform: rotate(0deg);
+  }
+  #zen-participation[role=article]:hover p:nth-child(3),
+  #zen-requirements[role=article]:hover p:nth-child(3){
+    transform: rotate(0deg);
+  }
+
+  #zen-participation[role=article]:hover p:nth-child(4),
+  #zen-requirements[role=article]:hover p:nth-child(4) {
+    transform: rotate(30deg);
+  }
+  #zen-participation[role=article]:hover p:nth-child(5),
+  #zen-requirements[role=article]:hover p:nth-child(5){
+    transform: rotate(-30deg);
+  }
+  /*#zen-supporting p:nth-child(2) {
     left: 40%;
   }
   #zen-supporting p:nth-child(3) {
@@ -160,7 +197,7 @@
   }
   #zen-supporting p:nth-child(6) {
     left: 10%;
-  }
+  }*/
 
   /*choose all adjacent p's to h3*/
   /*h3:hover ~ p {
@@ -172,22 +209,6 @@
   /*div[role=article]:hover p{
     color: black;
   }*/
-
-  #zen-supporting div[role=article]:hover p:nth-child(2) {
-    transform: rotate(30deg);
-  }
-  #zen-supporting div[role=article]:hover p:nth-child(3) {
-    transform: rotate(50deg);
-  }
-  #zen-supporting div[role=article]:hover p:nth-child(4) {
-    transform: rotate(-30deg);
-  }
-  #zen-supporting div[role=article]:hover p:nth-child(5) {
-    transform: rotate(-50deg);
-  }
-  #zen-supporting div[role=article]:hover p:nth-child(6) {
-    transform: rotate(-60deg);
-  }
 
   footer {
     display:none;
