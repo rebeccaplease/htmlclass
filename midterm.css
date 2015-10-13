@@ -19,13 +19,27 @@
     padding-top: 50px;
   }
 
-  .page-wrapper {
+  /*.page-wrapper {
     margin: auto;
     width: 20%;
     height: 100%;
     background-color: #332101;
-    /*margin-top: -200px;*/
+  }*/
+  #zen-supporting, #zen-summary, #zen-preamble{
+    margin: auto;
+    /*padding-top: 5%;
+    padding-bottom:5%;
+    padding-right: 10%;
+    padding-left: 10%;*/
+
+    width: 50%;
+    height: 100%;
+    background-color: #332101;
+    background-position: 0 300px;
+    /*color: LightGreen;*/
   }
+
+
   /*ovveride p format*/
   .summary p{
 
@@ -51,33 +65,57 @@
     top: 10%;
     left: 30%;
 
-    display: inline-block;
-    width: 150px;
-    height: 250px;
+    /*display: inline-block;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    /*width: 150px;
+    height: 250px;*/
+    /*half of width and height*/
+    /*border-radius: 75px / 150px; */
+    width: 300px;
+    height: 300px;
+    border-radius: 300px 0px;
     background: YellowGreen;
     border: 5px DarkGreen solid;
-    border-radius: 75px / 150px; /*half of width and height*/
+
     text-align: center;
-    padding-top: 50px;
+    /*padding: 50px;*/
     z-index: 1;
   }
-  p{
+#zen-supporting p, #zen-preamble p, #zen-summary p{
     position: absolute;
     top: 10%;
 
     display: inline-block;
-    width: 150px;
+    /*display: flex;
+    justify-content: center;
+    align-items: center;*/
+
+    /*width: 150px;
     height: 250px;
+    border-radius: 75px / 150px;*/
+    width: 300px;
+    height: 300px;
+    border-radius: 300px 0px;
     margin-bottom: 0;
 
     background: YellowGreen;
     border: 5px DarkGreen solid;
-    border-radius: 75px / 150px; /*half of width and height*/
     text-align: center;
-    padding-top: 50px;
     transition: all 0.5s ease-in-out;
     z-index: 0;
-    color: transparent;
+    /*color: transparent;*/
+
+    /*overflow: scroll;*/
+    padding-left: 50px;
+    padding-top: 150px;
+    /*padding-bottom: -150px;
+    padding-right: -50px;*/
+
+    transform-origin: -5% 100%;
   }
 
   p:nth-child(2) {
@@ -103,10 +141,9 @@
   transform-origin: 50% 85%;
   }*/
 
-  div[role=article]:hover p{
+  /*div[role=article]:hover p{
     color: black;
-    transform-origin: 50% 110%;
-  }
+  }*/
 
   div[role=article]:hover p:nth-child(2) {
     transform: rotate(30deg);
@@ -134,10 +171,55 @@
     margin-left:67%;
   }
 }
+
+
 /*mid size site*/
+/*vines*/
 @media all and (min-width:500px) and (max-width:1200px) {
+  body {
+    background-color: SkyBlue;
+    font-family: 'Architects Daughter';
+  }
+  #zen-explanation, #zen-participation, #zen-benefits, #zen-requirements, #zen-summary, #zen-preamble{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: space-around;
+
+    padding-top: 5%;
+    padding-bottom:5%;
+    padding-right: 10%;
+    padding-left: 10%;
+
+    /*width: 60%;
+    height: 100%;
+    background-color: #332101;
+    background-position: 0 300px;
+    color: LightGreen;*/
+  }
+
+  #zen-supporting p, h3{
+    width: 300px;
+    height: 300px;
+    border-radius: 300px 0px;
+    background: YellowGreen;
+    border: 5px;
+    border-style: solid;
+    border-color: DarkGreen;
+
+    /*overflow: scroll;*/
+
+    text-align: center;
+
+  }
+  h3{
+    text-align: center;
+  }
 
 }
+
+
 /*mobile site*/
 @media all and (min-width:300px) and (max-width:500px) {
 
@@ -170,9 +252,9 @@
   }
 
   h1::after {
-    width: 130px;
+    width: 150px;
     height: 150px;
-    border-radius: 65px / 50px;
+    border-radius: 150px  0px;
 
     top: -50px;
     right: 75px;
@@ -180,13 +262,12 @@
 
   h1::before {
     width: 150px;
-    height: 125px;
-    border-radius: 70px / 63px;
+    height: 150px;
+    border-radius: 150px  0px;
 
     top: -30px;
     left: 50px;
   }
-
 
   h1 {
     padding-top: 25px;
