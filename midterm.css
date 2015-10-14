@@ -158,7 +158,6 @@ full size site
     z-index: 1;
     /*color: transparent;*/
 
-    /*overflow: scroll;*/
     padding-left: 80px;
     padding-top: 100px;
     /*padding-bottom: -150px;*/
@@ -167,7 +166,6 @@ full size site
     border-radius: 300px 0px;
     transform-origin: 0% 100%;
     transform: rotate(-45deg);
-    overflow: scroll;
     font-size: 14px;
   }
   /*initial position*/
