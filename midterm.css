@@ -6,11 +6,12 @@
  *  / \  |  \/||  \  |  \
  *  | |  |    /|  /_ |  /_
  *  \_/  \_/\_\\____\\____\
-@import url('https://fonts.googleapis.com/css?family=Architects+Daughter');
 
 /*****************************************************************
  * Full-Size Site
  ****************************************************************/
+ @import url('https://fonts.googleapis.com/css?family=Architects+Daughter');
+
 @media all and (min-width:900px) {
   body {
     background-color: SkyBlue;
