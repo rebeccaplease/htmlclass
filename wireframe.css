@@ -1,0 +1,101 @@
+html {
+  background-color: DimGray;
+  font-family: monospace;
+}
+
+#container {
+  width: 1000px;
+  margin: 0 auto;
+}
+#top{
+  /*width: 1000px;
+  margin: 0 auto;*/
+  background-position: 50%;
+}
+#pageNavigation{
+  background-color: Silver;
+  width: 200px;
+  height: 800px;
+  border: 10px;
+  border-color: Black;
+  margin-right: 20px;
+  margin-left: 20px;
+  float: left;
+  padding: 10px;
+}
+#storyPage{
+  background-color: Lavender;
+  width: 600px;
+  height: 700px;
+  float: right;
+  padding: 40px;
+}
+
+#ads{
+  background-color: Azure;
+  height: 400px;
+  width: 200px;
+  float:right;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+#news{
+  background-color: Aquamarine;
+  height: 400px;
+  width: 460px;
+  float:right;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+.face {
+  width: 50px;
+  height: 50px;
+  float: left;
+}
+
+.ads{
+  float: right;
+  height: 400px;
+  width: 100px;
+}
+
+
+.title{
+  text-align: center;
+}
+
+header{
+  clear:both;
+  height: 80px;
+}
+
+hr {
+  clear:both;
+
+}
+a {
+  float:left;
+  clear:both;
+}
+p{
+  padding: 10px;
+}
+
+#headerTitle{
+  float:left;
+  height:50px;
+  /*text-align: center;*/
+}
+
+#hamster {
+  height: 500px;
+  width: 500px;
+}
+#storyLink{
+  font-size: 20px;
+}
+#websiteTitle{
+  font-size: 25px;
+}

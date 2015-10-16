@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tuzki Fun :3</title>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <header>
+    <link rel="favicon"
+    href="http://www.clubtuzki.com/avatars/duck_2013_avatar_06.png"
+    type="image/png" />
+  </header>
+  <style>
+  @import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light');
+  body{
+    font-family: 'Shadows Into Light';
+    /*background: radial-gradient(Gold, MediumSlateBlue, DarkTurquiose);*/
+    background: linear-gradient(to right, DarkTurquoise, MediumSlateBlue, DarkTurquoise); /* Standard syntax */
+  }
+  h1{
+    text-align: center;
+    color:
+  }
+  img{
+    display: block;
+    margin: auto;
+    border-radius: 10px;
+  }
+  button{
+    display: block;
+    margin: auto;
+    margin-top:20px;
+  }
+  .hidden{
+    display: none;
+  }
+  </style>
+  <script>
+  $(document).ready(function(){
+    var tuz = true;
+
+    $('img').click(function(){
+      console.log('you clicked on Tuzki!!');
+      var rand = Math.floor(Math.random() * 24 + 1) //Math.random does 0 and 1 exclusive, Math.floor rounds down (1 to 24 range)
+      var random = ""; //string representation of number
+      if(rand < 10){ //for url 00, 01, etc
+        random = "0" + rand;
+      }
+      else{
+        random = "" + rand;
+      }
+      var url;
+      if(tuz)  {
+        url = "http://www.clubtuzki.com/avatars/tuzki_2013_avatar_" + random + ".png";
+      }
+      else {
+        url = "http://www.clubtuzki.com/avatars/duck_2013_avatar_" + random + ".png";
+      }
+      $('img').attr("src", url);
+      console.log('hehe');
+    });
+
+    $('#hide').click(function(){
+      $('img').toggleClass('hidden');
+    });
+    $('#switch').click(function(){
+      tuz = !tuz; //toggle tuzki or duck
+      if(tuz){
+        var switchURL = "http://www.clubtuzki.com/avatars/tuzki_2013_avatar_01.png"
+      }
+      else{
+        var switchURL = "http://www.clubtuzki.com/avatars/duck_2013_avatar_01.png"
+      }
+      $('img').attr("src", switchURL);
+    });
+  });
+  </script>
+</head>
+<body>
+  <h1>Click on Tuzki!!</h1>
+  <img src = "http://www.clubtuzki.com/avatars/tuzki_2013_avatar_06.png" alt="Tuzki"></img>
+  <button type="button" id="hide">Hide :(</button>
+  <button type="button" id="switch">Switch!</button>
+</body>
+</html>

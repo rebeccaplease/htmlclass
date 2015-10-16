@@ -1,10 +1,16 @@
-/*Rebecca Poch
-Midterm 2015*/
-
-@import url('https://fonts.googleapis.com/css?family=Architects+Daughter');
 /*****************************************************************
-full size site
-*****************************************************************/
+ * Rebecca Poch
+ * Midterm 2015
+ *
+ * /__ __\/  __\/  __//  __/
+ *  / \  |  \/||  \  |  \
+ *  | |  |    /|  /_ |  /_
+ *  \_/  \_/\_\\____\\____\
+@import url('https://fonts.googleapis.com/css?family=Architects+Daughter');
+
+/*****************************************************************
+ * Full-Size Site
+ ****************************************************************/
 @media all and (min-width:900px) {
   body {
     background-color: SkyBlue;

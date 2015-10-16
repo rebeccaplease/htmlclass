@@ -1,0 +1,81 @@
+html{
+  font-family:cursive;
+}
+
+body{
+  /*background-color: #26A65B;*/
+  background-image: url(https://images2.pixlis.com/background-image-circles-bubbles-sponge-soap-seamless-tileable-wafer-honey-flower-238gnm.png);
+  height:150px;
+  width:150px;
+}
+header{
+  clear:both;
+  margin-left: 250px;
+  margin-top: 50px;
+}
+#tabBar{
+  margin: 15px;
+  /*float: left;*/
+  clear:both;
+  width: 900px;
+  margin-left: 275px;
+}
+#container {
+  width: 1000px;
+  margin: 30px;
+  margin-bottom: 40px;
+}
+.row{
+  /*float:left;*/
+  clear:both;
+  width: 980px;
+  margin: 0 auto;
+
+}
+.flower{
+  height: 300px;
+  width: 300px;
+  float:left;
+  background-color: LightCyan;
+  padding-left: 20px;
+  padding-top: 10px;
+  border-color: Crimson;
+  border-width: thin;
+  border-style:solid;
+}
+h1{
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #26A65B;
+  width: 500px;
+  border-radius: 30px;
+  /*position: absolute;
+  left:50%;
+  margin-right: -50%;*/
+}
+h2{
+  text-align: center;
+  float:left;
+  border-style: double;
+  border-color: #9f00a7;
+  padding: 10px;
+  padding-bottom: -20px;
+  background-color: DarkOrchid;
+}
+img {
+  height: 150px;
+  width: 150px;
+  float:left;
+}
+h3{
+  float:left;
+  clear:right;
+  margin:5px;
+}
+p{
+  float:left;
+  clear:both;
+}
+.month{
+  clear:both;
+}
