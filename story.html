@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+  <title>
+  </title>
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+</head>
+<script>
+var animal, place, game, ans;
+  $(document).ready(function(){
+    $('button').click(function(){
+
+      if( $('button').text() == "Start story!" ){
+         animal = prompt("What is your favorite animal?");
+        $('ul').append("<li>there was a lovely " + animal + ".</li>");
+        $('button').html("Next!");
+      }
+      else if( $('button').text() == "Next!" ){
+        place = prompt("What is your favorite place to spend time?");
+        $('ul').append("<li>Every day, the " + animal + " would go to the " + place + ".</li>");
+        $('button').html("Ooooh");
+      }
+      else if( $('button').text() == "Ooooh" ){
+        game = prompt("What is your favorite game?");
+        $('ul').append("<li>It would play " + game + " at the " + place + ".</li>");
+        $('button').html("What next?");
+      }
+      else if( $('button').text() == "What next?" ){
+        ans = prompt("Do you believe in fairies? [Y/N]");
+        // while (ans !==  "Y" || ans !== "N"){
+        //   ans = prompt("Hey do you believe in fairies? [Y/N]");
+        // }
+
+      if( ans == "Y" || ans == "yes" || ans == "y"){
+        $('ul').append("<li>The " + animal + "met a fairy and lived happily ever after. The end :)</li>");
+        $('body').style.background = "LimeGreen";
+      }
+      else {
+        $('ul').append("<li>The " + animal + " met a fairy, but since you didn't believe, the fairy died. The end :(</li>");
+        $('body').style.background = "OrangeRed";
+      }
+      $('button').disabled = true;
+    }
+
+
+
+    });
+
+  });
+</script>
+<body>
+  <h1>
+    Once upon a time...
+  </h1>
+  <ul>
+  </ul>
+  <button>Start story!</button>
+</body>
+
+<style>
+body {
+  font-family: fantasy;
+  background: MidnightBlue;
+  color: MintCream;
+}
+</style>
+
+</html>
