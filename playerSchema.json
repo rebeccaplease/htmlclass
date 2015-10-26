@@ -1,0 +1,47 @@
+{
+    "username": "Erin",
+    "equipped": [
+        {
+            "coif": "Aluminum Foil Coif"
+        },
+        {
+            "helm": "Great Rainbow Helm"
+        },
+        {
+            "chestplate": ""
+        },
+        {
+            "necklace": "Family Heirloom"
+        },
+        {
+            "rings": [
+                {
+                    "ring": "Chastity Ring"
+                },
+                {
+                    "ring": "Purity Ring"
+                }
+            ]
+        },
+        {
+            "weapons": []
+        },
+        {
+            "legging": ""
+        },
+        {
+            "shoes": ""
+        }
+    ],
+    "status": "blind",
+    "x-cord": 0,
+    "y-cord": 0,
+    "inventory": [
+        {
+            "weapon": "Stick"
+        },
+        {
+            "legging": "Pants"
+        }
+    ]
+}
