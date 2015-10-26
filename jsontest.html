@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSON funtime</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+
+<script>
+var items = "";
+var clicked = true;
+$.getJSON('playerSchema.json', function(data){
+    $('h2').append(data.username);
+
+    items += "<p>Coif: " + data.equipped.coif + "</p>";
+    items += "<p>Helm: " + data.equipped.helm + "</p>";
+    items += "<p>Chestplate: " + data.equipped.chestplate + "</p>";
+    items += "<p>Neckace: " + data.equipped.necklace + "</p>";
+    items += "<p>Rings: " + data.equipped.rings + "</p>";
+    items += "<p>Weapons: " + data.equipped.weapons + "</p>";
+    items += "<p>Legging: " + data.equipped.legging + "</p>";
+    items += "<p>Shoes: " + data.equipped.shoes + "</p>";
+    // for (var i in data.equipped){
+    //   items +=  "<p>" +  + data.equipped.coif + "</p>";
+    // }
+    //
+});
+$(document).ready(function(){
+  $('button').click(function(){
+    if(clicked){
+      $('#equip').html(item);
+    }
+    else {
+        $('#equip').html("");
+    }
+    clicked = !clicked;
+  });
+  });
+
+
+</script>
+<body>
+  <h1>>GameName<</h1>
+  <h2>Welcome Warrior </h2>
+  <button>Equipped</button>
+  <div id = "equip"></div>
+
+</body>
+
+</html>
