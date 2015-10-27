@@ -10,15 +10,15 @@ var items = "";
 var clicked = true;
 $.getJSON('playerSchema.json', function(data){
     $('h2').append(data.username);
-
-    items += "<p>Coif: " + data.equipped.coif + "</p>";
-    items += "<p>Helm: " + data.equipped.helm + "</p>";
-    items += "<p>Chestplate: " + data.equipped.chestplate + "</p>";
-    items += "<p>Neckace: " + data.equipped.necklace + "</p>";
-    items += "<p>Rings: " + data.equipped.rings + "</p>";
-    items += "<p>Weapons: " + data.equipped.weapons + "</p>";
-    items += "<p>Legging: " + data.equipped.legging + "</p>";
-    items += "<p>Shoes: " + data.equipped.shoes + "</p>";
+    var i = 0;
+    items += "<p>Coif: " + data.equipped[i++] + "</p>";
+    items += "<p>Helm: " + data.equipped[i++] + "</p>";
+    items += "<p>Chestplate: " + data.equipped[i++] + "</p>";
+    items += "<p>Neckace: " + data.equipped[i++] + "</p>";
+    items += "<p>Rings: " + data.equipped[i++] + "</p>";
+    items += "<p>Weapons: " + data.equipped[i++] + "</p>";
+    items += "<p>Legging: " + data.equipped[i++] + "</p>";
+    items += "<p>Shoes: " + data.equipped[i++] + "</p>";
     // for (var i in data.equipped){
     //   items +=  "<p>" +  + data.equipped.coif + "</p>";
     // }
