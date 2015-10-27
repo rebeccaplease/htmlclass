@@ -11,6 +11,7 @@ var clicked = true;
 $.getJSON('playerSchema.json', function(dat){
 
     var data = JSON.parse(dat);
+    console.log(data);
     $('h2').append(data.username);
     var i = 0;
     items += "<p>Coif: " + data.equipped[i++] + "</p>";
