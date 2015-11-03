@@ -18,7 +18,7 @@ $.getJSON('playerSchema.json', function(data){
     items += "<p>Helm: " + data.equipped[i++].helm + "</p>";
     items += "<p>Chestplate: " + data.equipped[i++].chestplate + "</p>";
     items += "<p>Neckace: " + data.equipped[i++].necklace + "</p>";
-    items += "<p>Rings: " + data.equipped[i++].rings + "</p>";
+    items += "<p>Rings: " + data.equipped[i].rings[0].ring +", "+data.equipped[i++].rings[1].ring   + "</p>";
     items += "<p>Weapons: " + data.equipped[i++].weapons  + "</p>";
     items += "<p>Legging: " + data.equipped[i++].legging + "</p>";
     items += "<p>Shoes: " + data.equipped[i++].shoes + "</p>";
