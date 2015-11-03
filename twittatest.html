@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script>
+  var holidays = ['halloween','christmas','hanukkah','kwanzaa'];
+  var holidaysCache = [];
+
+  function searchEastVillage(holiday){
+    $.getJSON('http://cooper-union-search-proxy.herokuapp.com/twitter/search/east%20village&'+holiday+'?count=100', function(response){
+
+      console.log("There are " + response.statuses.length + " tweets about " + holiday +" in the East Village.");
+      var retweet_count = 0;
+      var favorite_count = 0;
+      for(var i=0; i<response.statuses.length; i++) {
+        retweet_count += response.statuses[i].retweet_count;
+        favorite_count += response.statuses[i].favorite_count;
+      }
+      console.log(retweet_count, favorite_count);
+      //holiday.retweets = retweet_count;
+      //holiday.favorites = favorite_count;
+      //holiday.setData(retweet_count, favorite_count);
+      holidaysCache.push(new Cache(holiday,retweet_count, favorite_count));
+    });
+  }
+
+  function print(text){
+    $('#text').append('<p>' + text +'</p>');
+  }
+
+  //object to store holiday and number of retweets and favorites
+  function Cache(h, rt, fav){
+    this.holiday = h;
+    this.retweets = rt;
+    this.favorites = fav;
+  }
+
+  for(var k = 0; k < holidays.length; k++){
+    searchEastVillage(holidays[k]);
+  }
+
+  $('document').ready(function(){
+    $('button').click(function(){
+    for(var k = 0; k < holidaysCache.length; k++){
+      var multiplier = holidaysCache[k].retweets+holidaysCache[k].favorites;
+      //var multiplier = holidays[response ]
+      console.log('multiplying',k,multiplier);
+      //$('div:nth-child(' + (k+1) + ')').css('height',  multiplier);
+      //$('div:nth-child(' + (k+1) + ')').css('width',  multiplier);
+      $(''+holidaysCache[k].holiday+'').css('height',  multiplier);
+      $(''+holidaysCache[k].holiday+'').css('width',  multiplier);
+    }
+  });
+  });
+
+  </script>
+  <style>
+  body{
+    background: Lavender;
+  }
+  .circle{
+    border-radius: 50%;
+  }
+  #halloween{
+    background: DarkOrange;
+    border: 2px dashed #660033;
+  }
+  #christmas{
+    background: DarkGreen;
+    border: 2px solid Crimson;
+  }
+  #hanukkah{
+    background: Navy;
+    border: 2px solid LightSteelBlue;
+  }
+  #kwanzaa{
+    background: url('http://mccchurch.org/files/2013/10/86330651.gif');
+  }
+
+  </style>
+</head>
+
+<body>
+  <div id="halloween" class='circle'></div>
+  <div id="christmas" class='circle'></div>
+  <div id="hanukkah" class='circle'></div>
+  <div id="kwanzaa" class='circle'></div>
+  <button>yes</button>
+
+</body>
+</html>
