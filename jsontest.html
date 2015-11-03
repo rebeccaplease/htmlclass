@@ -23,7 +23,7 @@ $.getJSON('playerSchema.json', function(data){
     items += "<p>Legging: " + data.equipped[i++] + "</p>";
     items += "<p>Shoes: " + data.equipped[i++] + "</p>";*/
      for (var i in data.equipped){
-       items +=  "<p>" + data.equipped[i].key + data.equipped[i].value + "</p>";
+       items +=  '<p>' + i.key + ': '+ i.value + '</p>';
      }
     
 });
