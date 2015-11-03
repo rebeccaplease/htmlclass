@@ -22,8 +22,8 @@ $.getJSON('playerSchema.json', function(data){
     items += "<p>Weapons: " + data.equipped[i++] + "</p>";
     items += "<p>Legging: " + data.equipped[i++] + "</p>";
     items += "<p>Shoes: " + data.equipped[i++] + "</p>";*/
-     for (var i in data.equipped){
-       items +=  '<p>' + i.key + ': '+ i.value + '</p>';
+     for (var key in data.equipped){
+       items +=  '<p>' + key + ': '+ data.equipped[key] + '</p>';
      }
     
 });
