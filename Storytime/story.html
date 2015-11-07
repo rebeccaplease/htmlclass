@@ -35,9 +35,12 @@ $(document).ready(function(){
         $('ul').append("<li>The " + animal + " met a fairy and lived happily ever after. The end :)</li>");
         $('li:last-child').css('color', "LimeGreen");
       }
-      else {
+      else if(ans.toUpperCase() == "N" || ans.toUpperCase() == "NO" || ans.toUpperCase() == "NOPE" {
         $('ul').append("<li>The " + animal + " met a fairy, but since you didn't believe, the fairy died. The end :(</li>");
         $('li:last-child').css('color', "OrangeRed");
+      }
+      else{
+        $('ul').append("<li>"+ans+" is not a valid answer :( </li>");
       }
       //$('button').prop('disabled', true);
       $('button').html("Start Over");
