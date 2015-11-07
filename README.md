@@ -16,7 +16,7 @@ Full size site: hover over the leaves to rotate them and view content.
 
 Mobile site: straightforward scrolling.
 
-## Quiz ## 
+## Quiz ##
 Tell a story based on user inputs by prompt.
 
 ## TuzkiOnOff ##
