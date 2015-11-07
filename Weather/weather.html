@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather + Elevation</title>
+
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script>
+  var states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI',
+  'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+  'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND',
+  'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY' ];
+
+  var capitals = ['Montgomery', 'Juneau', 'Phoenix', 'Little Rock', 'Sacramento', 'Denver', 'Hartford', 'Dover',
+  'Tallahassee', 'Atlanta', 'Honolulu', 'Boise', 'Springfield', 'Indianapolis', 'Des Moines', 'Topeka',
+  'Frankfort', 'Baton Rouge', 'Augusta', 'Annapolis', 'Boston', 'Lansing', 'St. Paul', 'Jackson',
+  'Jefferson City', 'Helena', 'Lincoln', 'Carson City', 'Concord', 'Trenton', 'Santa Fe', 'Albany', 'Raleigh',
+  'Bismarck', 'Columbus', 'Oklahoma City', 'Salem', 'Harrisburg', 'Providence', 'Columbia',
+  'Pierre', 'Nashville', 'Austin', 'Salt Lake City', 'Montpelier', 'Richmond', 'Olympia',
+  'Charleston', 'Madison', 'Cheyenne'];
+
+  //store last 5 states chosen
+  var last = [];
+  var count = 1;
+
+  $(document).ready(function(){
+    //add state options to the dropdonw menu
+    for(var k = 0; k < states.length; k++){
+      $('select').append("<option value=\""+states[k]+ "\">"+ states[k] + "</option>");
+    }
+
+    //if a new state is selected
+    $('select').change(function () {
+      //get selected value for state
+      var state = $(this).val();
+      //get corresponding capital
+      var city = capitals[states.indexOf(state)];
+
+      $.getJSON("http://cooper-union-weather-proxy.herokuapp.com/weather/" + state + "/" + city, function(response){
+        console.log(response);
+
+        var elevation = response.current_observation.display_location.elevation;
+        var temperature = response.current_observation.temperature_string;
+
+        //set height to
+        if(elevation > 1000){
+          elevation = 1000; //cutoff height
+        }
+        for(var a = count; a > 1; a--){
+          console.log(a);
+          //move all elements to the right by one
+          //set height to left element's height
+        $('.block:nth-child(' + a + ')').css('height', $('.block:nth-child(' + (a-1) + ')').css('height') );
+        $('.block:nth-child(' + a + ')').css('border-width', '2px');
+        $('.block:nth-child(' + a + ')').html( $('.block:nth-child(' + (a-1) + ')').html() );
+
+      }
+        //set leftmost element to new state values
+        $('#one').css('height', elevation);
+        $('#one').html('<img src='+response.current_observation.icon_url+'></img>'+temperature+'<p>State: '+state+'</p>');
+        $('#one').css('border-width', '2px');
+        if(count < 5){
+            count++;
+        }
+
+
+
+      });
+    });
+  });
+
+  </script>
+  <style>
+    body{
+      font-family: serif;
+    }
+    #weather{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: flex-end;
+    }
+    .block{
+      width: 100px;
+      flex-grow: 2;
+      background-color: PaleTurquoise;
+      border: 0px RoyalBlue solid;
+    }
+  </style>
+</head>
+<body>
+  <h1>Weather and Elevation in the Capitals of the United States</h1>
+  <p>Pick a state!</p>
+  <div id = 'state'>
+    <select>
+    </select>
+  </div>
+
+  <div id='weather'>
+    <div id='one' class='block'></div>
+    <div id='two' class='block'></div>
+    <div id='three' class='block'></div>
+    <div id='four' class='block'></div>
+    <div id='five' class='block'></div>
+  </div>
+
+</body>
+</html>
