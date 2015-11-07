@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSON funtime</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+
+<script>
+var items = "";
+var clicked = true;
+$.getJSON('playerSchema.json', function(data){
+
+    //var data = JSON.parse(dat);
+    console.log(data);
+    $('h2').append(data.username);
+    var i = 0;
+    items += "<p>Coif: " + data.equipped[i++].coif + "</p>";
+    items += "<p>Helm: " + data.equipped[i++].helm + "</p>";
+    items += "<p>Chestplate: " + data.equipped[i++].chestplate + "</p>";
+    items += "<p>Neckace: " + data.equipped[i++].necklace + "</p>";
+    items += "<p>Rings: " + data.equipped[i].rings[0].ring +", "+data.equipped[i++].rings[1].ring   + "</p>";
+    items += "<p>Weapons: " + data.equipped[i++].weapons  + "</p>";
+    items += "<p>Legging: " + data.equipped[i++].legging + "</p>";
+    items += "<p>Shoes: " + data.equipped[i++].shoes + "</p>";
+     /*for (var key in data.equipped){
+       items +=  '<p>' + key + ': '+ data.equipped[key] + '</p>';
+     } */
+    
+});
+$(document).ready(function(){
+  $('button').click(function(){
+    if(clicked){
+      $('#equip').html(items);
+    }
+    else {
+        $('#equip').html("");
+    }
+    clicked = !clicked;
+  });
+  });
+
+
+</script>
+<body>
+  <h1>>GameName<</h1>
+  <h2>Welcome Warrior </h2>
+  <button>Equipped</button>
+  <div id = "equip"></div>
+
+</body>
+
+</html>
