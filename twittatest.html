@@ -3,24 +3,45 @@
 <head>
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script>
-  var holidays = ['halloween','christmas','hanukkah','kwanzaa'];
-  var holidaysCache = [];
+  var holidays = ['halloween','christmas','thanksgiving', 'newyears'];
+  var holidaysCache = new Array(holidays.length);
+  var loadCount = 0;
 
-  function searchEastVillage(holiday){
-    $.getJSON('http://cooper-union-search-proxy.herokuapp.com/twitter/search/east%20village&'+holiday+'?count=100', function(response){
+  function searchManhattan(holiday, index){
+    var tweetCount = 100;
+    var search;
+    if(holiday === 'newyears'){
+      search = 'new%20year%27s';
+    }
+    else{
+      search = holiday;
+    }
+    $.getJSON('http://cooper-union-search-proxy.herokuapp.com/twitter/search/manhattan&'+search+'?count='+tweetCount, function(response){
 
       console.log("There are " + response.statuses.length + " tweets about " + holiday +" in the East Village.");
       var retweet_count = 0;
       var favorite_count = 0;
+      var status = new Array(response.statuses.length);
       for(var i=0; i<response.statuses.length; i++) {
-        retweet_count += response.statuses[i].retweet_count;
-        favorite_count += response.statuses[i].favorite_count;
+        //for Cache
+        var rt = response.statuses[i].retweet_count;
+        var fav = response.statuses[i].favorite_count;
+        //for each Tweet
+        retweet_count += rt;
+        favorite_count += fav;
+        status[i]= new Tweet(response.statuses[i].text, rt, fav);
       }
       console.log(retweet_count, favorite_count);
-      //holiday.retweets = retweet_count;
-      //holiday.favorites = favorite_count;
-      //holiday.setData(retweet_count, favorite_count);
-      holidaysCache.push(new Cache(holiday,retweet_count, favorite_count));
+
+      holidaysCache[index] = (new Cache(holiday,retweet_count, favorite_count, status));
+      loadCount++;
+
+      //if all the data finished loading
+      if(loadCount === holidaysCache.length){
+        //$('#loading').css('visibility', 'hidden');
+        $('button').prop('disabled', false);
+        $('button').html("Show me!");
+      }
     });
   }
 
@@ -29,37 +50,65 @@
   }
 
   //object to store holiday and number of retweets and favorites
-  function Cache(h, rt, fav){
+  function Cache(h, rt, fav, statuses){
     this.holiday = h;
+    this.retweetsTotal = rt;
+    this.favoritesTotal = fav;
+    this.statuses = statuses; //for holding Tweet objects for this holiday
+  }
+  function Tweet(text, rt, fav){
+    this.words = text;
     this.retweets = rt;
     this.favorites = fav;
   }
 
+  //load all tweet data for each holiday
   for(var k = 0; k < holidays.length; k++){
-    searchEastVillage(holidays[k]);
+    searchManhattan(holidays[k], k);
   }
 
   $('document').ready(function(){
-    $('button').click(function(){
-    for(var k = 0; k < holidaysCache.length; k++){
-      var multiplier = holidaysCache[k].retweets+holidaysCache[k].favorites;
+
+    for(var k = 0; k < holidays.length; k++){
+        $('.circle').append("<div id=\'"+holidays[k]+"\'>"+holidays[k]+"</div>");
+    }
+
+    $('#show').click(function(){
+    for(var k = 0; k < holidays.length; k++){
+      var multiplier = holidaysCache[k].retweetsTotal+holidaysCache[k].favoritesTotal;
       //var multiplier = holidays[response ]
-      console.log('multiplying',k,multiplier);
+      console.log('multiplying', k, multiplier);
       //$('div:nth-child(' + (k+1) + ')').css('height',  multiplier);
       //$('div:nth-child(' + (k+1) + ')').css('width',  multiplier);
-      $(''+holidaysCache[k].holiday+'').css('height',  multiplier);
-      $(''+holidaysCache[k].holiday+'').css('width',  multiplier);
-    }
-  });
+      $('#'+holidaysCache[k].holiday+'').css('height',  multiplier);
+      $('#'+holidaysCache[k].holiday+'').css('width',  multiplier);
+      $('#'+holidaysCache[k].holiday+'').css('visibility',  'visible');
+      }
+    });
+
+    $('.circle div').click(function(){
+      $(this).css('background', 'none');
+      $(this).css('border', 'none');
+      //var holidayID = $(this).prop('id');
+      //var holidayCache = holidaysCache
+      //$(this).append()
+    });
+
+
   });
 
   </script>
   <style>
   body{
     background: Lavender;
+    text-align: center;
   }
-  .circle{
+  .circle div{
     border-radius: 50%;
+    visibility: hidden;
+  }
+  #show{
+    disabled: true;
   }
   #halloween{
     background: DarkOrange;
@@ -69,23 +118,28 @@
     background: DarkGreen;
     border: 2px solid Crimson;
   }
-  #hanukkah{
+  #thanksgiving{
     background: Navy;
     border: 2px solid LightSteelBlue;
   }
-  #kwanzaa{
-    background: url('http://mccchurch.org/files/2013/10/86330651.gif');
+  #newyears{
+    background: Blue;
+    border: 2px solid Green;
   }
 
   </style>
 </head>
 
 <body>
-  <div id="halloween" class='circle'></div>
-  <div id="christmas" class='circle'></div>
-  <div id="hanukkah" class='circle'></div>
-  <div id="kwanzaa" class='circle'></div>
-  <button>yes</button>
+  <h1>What holidays are people talking about in Manhattan?</h1>
+  <!-- <p id='loading'>loading...</p> -->
+  <div class='circle'>
+  <!-- <div id='halloween' class='circle'></div>
+  <div id='christmas' class='circle'></div>
+  <div id='thanksgiving' class='circle'></div>
+  <div id='newyear' class='circle'></div> -->
+  </div>
+  <button id='show' disabled="true">...loading...</button>
 
 </body>
 </html>
