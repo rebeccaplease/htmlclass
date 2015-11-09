@@ -6,6 +6,7 @@
   var holidays = ['halloween','christmas','thanksgiving', 'newyears'];
   var holidaysCache = new Array(holidays.length);
   var loadCount = 0;
+  var expandedCount = 0;
 
   function searchManhattan(holiday, index){
     var tweetCount = 100;
@@ -60,6 +61,8 @@
     this.words = text;
     this.retweets = rt;
     this.favorites = fav;
+    this.vx = Math.random(10)+1;
+    this.vy = Math.random(10)+1;
   }
 
   //load all tweet data for each holiday
@@ -80,24 +83,39 @@
       console.log('multiplying', k, multiplier);
       //$('div:nth-child(' + (k+1) + ')').css('height',  multiplier);
       //$('div:nth-child(' + (k+1) + ')').css('width',  multiplier);
-      $('#'+holidaysCache[k].holiday+'').css('height',  multiplier);
-      $('#'+holidaysCache[k].holiday+'').css('width',  multiplier);
+      if(multiplier < 800){
+        $('#'+holidaysCache[k].holiday+'').css('height',  multiplier);
+        $('#'+holidaysCache[k].holiday+'').css('width',  multiplier);
+      }
+      else {
+        $('#'+holidaysCache[k].holiday+'').css('height',  800);
+        $('#'+holidaysCache[k].holiday+'').css('width',  800);
+      }
       $('#'+holidaysCache[k].holiday+'').css('visibility',  'visible');
       }
     });
 
     $('.circle .notExpanded').click(function(){
-      $(this).css('opacity', 0.5);
+      //$(this).css('opacity', 0.5);
       var expanded = $(this).attr('class');
       if(expanded !== 'expanded'){
         var holidayLoc = holidays.indexOf($(this).prop('id'));
         var h = holidaysCache[holidayLoc]; //hold onto Cache for this holiday
-        for(var i = 0; i < h.statuses.length; i++){
-          var size = h.statuses[i].retweets+h.statuses[i].favorites+100;
-          $(this).append("<div class=\'split\' height="+size+" width="+size+
-            ">-</div>")
+
+        // $(this).css('height','100%');
+        // $(this).css('width','100%');
+          $(this).html('');
+          for(var i = 0; i < h.statuses.length; i++){
+          var size = h.statuses[i].retweets+h.statuses[i].favorites+10;
+          $(this).append("<div class=\'split\' style=\'height:"+size+"px; width:"+size+
+            "px\'></div>")
         }
         $(this).prop('class', 'expanded');
+        expandedCount++;
+
+        if(expandedCount == holidays.length){
+          $('#show').css('visibility', 'hidden');
+        }
       }
 
     //  $(this).css('background', 'none');
@@ -111,16 +129,40 @@
   </script>
   <style>
   body{
-    background: Lavender;
+    background: Azure;
     text-align: center;
+  }
+  .circle{
+    visibility: hidden;
+    margin: auto;
+    color: SeaShell;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    flex-wrap: wrap;
+    align-items: center;
   }
   .circle div{
     border-radius: 50%;
     /*visibility: hidden;*/
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
   }
   .split{
     border-radius: 50%;
-    background: inherit;
+    background: Fuchsia;
+    float: left;
+
+    /*animation-name: ;*/
+    /*animation-duration: 3s;*/
+  }
+  .expanded{
+    background: none;
   }
   #show{
     disabled: true;
@@ -134,12 +176,12 @@
     border: 2px solid Crimson;
   }
   #thanksgiving{
-    background: Navy;
-    border: 2px solid LightSteelBlue;
+    background: OrangeRed;
+    border: 2px solid Maroon;
   }
   #newyears{
-    background: Blue;
-    border: 2px solid Green;
+    background: SlateBlue;
+    border: 2px solid RebeccaPurple;
   }
 
   </style>
