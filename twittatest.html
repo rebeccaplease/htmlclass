@@ -18,7 +18,7 @@
     }
     $.getJSON('http://cooper-union-search-proxy.herokuapp.com/twitter/search/manhattan&'+search+'?count='+tweetCount, function(response){
 
-      console.log("There are " + response.statuses.length + " tweets about " + holiday +" in the East Village.");
+      console.log("There are " + response.statuses.length + " tweets about " + holiday +" in Manhattan.");
       var retweet_count = 0;
       var favorite_count = 0;
       var status = new Array(response.statuses.length);
@@ -70,7 +70,7 @@
   $('document').ready(function(){
 
     for(var k = 0; k < holidays.length; k++){
-        $('.circle').append("<div id=\'"+holidays[k]+"\'>"+holidays[k]+"</div>");
+        $('.circle').append("<div id=\'"+holidays[k]+"\' class=\'notExpanded\'>"+holidays[k]+"</div>");
     }
 
     $('#show').click(function(){
@@ -86,14 +86,18 @@
       }
     });
 
-    $('.circle div').click(function(){
+    $('.circle .notExpanded').click(function(){
       $(this).css('opacity', 0.5);
-      var holidayLoc = holidays.indexOf($(this).prop('id'));
-      var h = holidaysCache[holidayLoc]; //hold onto Cache for this holiday
-      for(var i = 0; i < h.statuses.length; i++){
-        var size = h.statuses[i].retweets+h.statuses[i].favorites+100;
-        $(this).append("<div class=\'split\' height="+size+" width="+size+
-          ">"+h.statuses[i].words+"</div>")
+      var expanded = $(this).attr('class');
+      if(expanded !== 'expanded'){
+        var holidayLoc = holidays.indexOf($(this).prop('id'));
+        var h = holidaysCache[holidayLoc]; //hold onto Cache for this holiday
+        for(var i = 0; i < h.statuses.length; i++){
+          var size = h.statuses[i].retweets+h.statuses[i].favorites+100;
+          $(this).append("<div class=\'split\' height="+size+" width="+size+
+            ">-</div>")
+        }
+        $(this).prop('class', 'expanded');
       }
 
     //  $(this).css('background', 'none');
