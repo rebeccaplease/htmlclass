@@ -1,70 +1,64 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-      html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
+<head>
+  <title>Simple Map</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+  <script src="http://cooper-union-maps-proxy.herokuapp.com/js/draw.js"></script>
+  <script>
+  $(document).ready(function(){
+
+    var mapOptions = {
+      zoom: 12,
+      center: new google.maps.LatLng(1.3399176,103.8248864) //singapore
+    };
+
+    var positions = [
+      {
+        'title':'Merlion Statue',
+        'map': new google.maps.LatLng(1.286836, 103.854533),
+        'link':'http://www.yoursingapore.com/see-do-singapore/recreation-leisure/viewpoints/merlion-park.html',
+        'html':'<img src=\'https://40.media.tumblr.com/0118004add3d98d644dc9ba62e6062f4/tumblr_nth8erAtOV1qgih5jo1_500.jpg\' />'
+      },
+      {
+        'title':'Sentosa',
+        'map': new google.maps.LatLng(1.248987, 103.830737),
+        'link': 'http://www.sentosa.com.sg/en/',
+        'html':'<img src=\'https://36.media.tumblr.com/75680f9711b6ec99f5753860d27e3c22/tumblr_nnhi2zSz1P1tnrz0io1_500.jpg\' />'
+      },
+      {
+        'title':'Tanglin Mall',
+        'map': new google.maps.LatLng(1.305205, 103.823645),
+        'link':'http://www.tanglinmall.com.sg/',
+        'html':'<img src=\'https://38.media.tumblr.com/9d34bfe638a4ac4fa3e77d2b4af72eb8/tumblr_nrj4g1eHZF1rfvr4vo1_500.gif\' />'
+      },
+      {
+        'title':'Airport',
+        'map': new google.maps.LatLng(1.367651, 103.991260),
+        'link': 'http://www.changiairport.com/',
+        'html':'<img src=\'https://38.media.tumblr.com/4db0e5788dd43970cc6aede0df43819a/tumblr_mo5z7mbaES1ru8wm8o1_500.gif\' />'
       }
-    </style>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <script>
+    ];
 
-      //set up the google map
-      var map;
+    draw('map', mapOptions, positions);
+  });
 
-      //create a function that runs when the page is ready
-      var initialize = function() {
-        //set some default options
-        var mapOptions = {
-          zoom: 12, //very close
-          center: new google.maps.LatLng(1.3399176,103.8248864) //singapore
-        };
+  // google.maps.event.addDomListener(window, 'load', initialize);
+  //google.maps.event.addDomListener(window, 'load', initialize);
 
-        //create a new map, and have it populate the #map-canvas html element
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
 
-      var places = [{
-              position: new google.maps.LatLng(1.286836, 103.854533),
-              map: map,
-              title:"Merlion Statue",
-          },
-          {
-              position: new google.maps.LatLng(1.248987, 103.830737),
-              map: map,
-              title:"Sentosa",
-          },
-          {
-              position: new google.maps.LatLng(1.305205, 103.823645),
-              map: map,
-              title:"Tanglin Mall",
-          },
-          
-          {
-              position: new google.maps.LatLng(1.367651, 103.991260),
-              map: map,
-              title:"Airport",
-        }];
 
-       for(var i=0; i<places.length; i++) {
-          new google.maps.Marker(places[i]);
-          // console.log(places[0]);
-          // console.log(map);
-        }
+  </script>
+  <style>
+      #map {
+        height:1000px;
+        width:1000px;
       }
-      //add the map to the page, when the page is ready
-      google.maps.event.addDomListener(window, 'load', initialize);
-
-
-
-    </script>
-  </head>
-  <body>
-    <div id="map-canvas"></div>
-  </body>
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+</body>
 </html>
