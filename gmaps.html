@@ -29,8 +29,32 @@
         var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
 
-      }
+      var places = [{
+              position: new google.maps.LatLng(1.286836, 103.854533),
+              map: map,
+              title:"Merlion Statue",
+          },
+          {
+              position: new google.maps.LatLng(1.248987, 103.830737),
+              map: map,
+              title:"Sentosa",
+          },
+          {
+              position: new google.maps.LatLng(1.305205, 103.823645),
+              map: map,
+              title:"Tanglin Mall",
+          }
+              position: new google.maps.LatLng(1.367651, 103.991260),
+              map: map,
+              title:"Airport",
+        }];
 
+       for(var i=0; i<places.length; i++) {
+          new google.maps.Marker(places[i]);
+          // console.log(places[0]);
+          // console.log(map);
+        }
+      }
       //add the map to the page, when the page is ready
       google.maps.event.addDomListener(window, 'load', initialize);
 
