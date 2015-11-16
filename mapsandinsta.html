@@ -165,7 +165,7 @@
       $('select').append("<option value="+pictures.filters[k]+ ">"+ pictures.filters[k] + "</option>");
     }
 
-    $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/nyc?count=200", function(response){
+    $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/nyc?count=100", function(response){
         console.log(response);
         console.log(pictures);
         //loop through all results
