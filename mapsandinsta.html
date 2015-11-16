@@ -9,93 +9,8 @@
   <script src="http://cooper-union-maps-proxy.herokuapp.com/js/draw.js"></script>
   <script>
 
-  //hold all the filter names
-
+  //hold all the filter names and pictures
   var pictures={
-    // filters: {[
-    //   'Normal': {
-    //     'array': [],
-    //   },
-    //   '1977': {
-    //     'array': [],
-    //   },
-    //   'Amaro': {
-    //     'array': [],
-    //   },
-    //   'Brannan': {
-    //     'array': [],
-    //   },
-    //   'Earlybird': {
-    //     'array': [],
-    //   },
-    //   'Hefe': {
-    //     'array': [],
-    //   },
-    //   'Hudson': {
-    //     'array': [],
-    //   },
-    //   'Inkwell': {
-    //     'array': [],
-    //   },
-    //   'Kelvin': {
-    //     'array': [],
-    //   },
-    //   'Lo-fi': {
-    //     'array': [],
-    //   },
-    //   'Mayfair': {
-    //     'array': [],
-    //   },
-    //   'Nashville': {
-    //     'array': [],
-    //   },
-    //   'Rise': {
-    //     'array': [],
-    //   },
-    //   'Sierra': {
-    //     'array': [],
-    //   },
-    //   'Sutro': {
-    //     'array': [],
-    //   },
-    //   'Toaster': {
-    //     'array': [],
-    //   },
-    //   'Valencia': {
-    //     'array': [],
-    //   },
-    //   'Walden': {
-    //     'array': [],
-    //   },
-    //   'Willow': {
-    //     'array': [],
-    //   },
-    //   'X-Pro II': {
-    //     'array': [],
-    //   },
-    //   'Slumber': {
-    //     'array': [],
-    //   },
-    //   'Cream': {
-    //     'array': [],
-    //   },
-    //   'Ludwig': {
-    //     'array': [],
-    //   },
-    //   'Aden': {
-    //     'array': [],
-    //   },
-    //   'Perpetua': {
-    //     'array': [],
-    //   },
-    //   'Juno': {
-    //     'array': [],
-    //   },
-    //   'Clarendon': {
-    //     'array': [],
-    //   }
-    // ]
-    //}
     filters: [
       'Normal',
       '1977',
@@ -170,9 +85,10 @@
         console.log(pictures);
         //loop through all results
         for(var i=0; i<response.length; i++) {
-          console.log(response[i]);
+
           //if there is a location tagged
           if(response[i].location != null){
+            console.log(response[i]);
             //add to pictures array to corresponding filter
             var f = response[i].filter;
             var index = pictures.filters.indexOf(f);
@@ -188,6 +104,16 @@
                 'link': response[i].link,
                 'html':'<img src=\''+response[i].images.thumbnail.url+'\n\'/>'
               });
+            }
+            else{ //add missing filter
+              pictures.filters.push(f);
+              pictures.array.push([{
+                'title': response[i].caption.text,
+                'map': new google.maps.LatLng(response[i].location.latitude, response[i].location.longitude),
+                'link': response[i].link,
+                'html':'<img src=\''+response[i].images.thumbnail.url+'\n\'/>'
+              }]);
+                $('select').append("<option value="+f+ ">"+ f + "</option>");
             }
           }
         }
