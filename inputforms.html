@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Spreadsheet JSON Example</title>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.3.5/tabletop.min.js"></script>
+  <script>
+  $(document).ready(function(){
+
+    //configure spreadsheet
+    var public_spreadsheet_url = '1t9I86ioiBJvPP4BHhtexOfOKqdqKJTWCkqUfleo_9jw';
+
+    //function to get data from the spreadsheet
+    var getData = function () {
+      Tabletop.init({
+        "key": public_spreadsheet_url,
+        "callback": processData,
+        "simpleSheet": true
+      });
+    }
+
+    //editable function that processes data from the spreadsheet
+    var processData = function(data){
+      var puppies = 0.0;
+      var dubstep = 0.0;
+      var cooper = 0.0;
+
+      console.log(data);
+      for(var i=0; i<data.length; i++) {
+        puppies += parseInt(data[i].puppies);
+        dubstep += parseInt(data[i].dubstep);
+        cooper += parseInt(data[i].cooper);
+      }
+      var total = puppies + dubstep + cooper;
+      var num = 100;
+
+      var items = [
+        {
+          'name': 'puppies',
+          'ratio': Math.floor(puppies/total*num)
+        },
+        {
+          'name': 'music',
+          'ratio': Math.floor(dubstep/total*num)
+        },
+        {
+          'name': 'cooperunion',
+          'ratio': Math.floor(cooper/total*num)
+        }
+      ];
+      console.log(items);
+      for(var i = 0; i < items.length; i++){
+        //setInterval to run every x seconds
+        console.log(items[i].name);
+        $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+items[i].name+"?count="+items[i].ratio, function(response){
+          console.log(response);
+          for(var k = 0; k < response.length; k++){
+            $('body').append('<img src = '+response[k].images.low_resolution.url+' />');
+          }
+        });
+      }
+    };
+
+      //function that runs when the page is ready
+      getData();
+
+
+    });
+    </script>
+    <style>
+
+
+
+    </style>
+
+  </head>
+  <body>
+    <iframe src="https://docs.google.com/forms/d/1bHj6fOvTHpX9YQgrPSC2ax9sHn_rXcGewh6grOYlJ7U/viewform?embedded=true" width="760" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+  </body>
+  </html>
