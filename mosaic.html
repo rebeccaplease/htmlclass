@@ -6,13 +6,15 @@
   <script>
 
   var parts = []; //store split images (base64 url)
+  var file,reader;
   //upload file
   function previewFile() {
-    var file = $('#fileinput')[0].files[0];
-    var reader = new FileReader();
+    file = $('#fileinput')[0].files[0];
+    reader = new FileReader();
 
     reader.onloadend = function () {
       $('#preview').prop('src',reader.result);
+      colorSearch();
     }
 
     if (file) {
@@ -20,7 +22,10 @@
     } else {
       $('#preview').prop('src', '');
     }
-    //reader.loadend=
+
+
+  }
+  function colorSearch() {
     var save = 'data:image/png;base64,'+reader.result;
 
     //find colors of an image slice
@@ -32,6 +37,10 @@
 
   $(document).ready(function(){
     // $('body').append('<img src='' alt='split images'/>');
+
+
+
+
       });
 
   </script>
@@ -43,4 +52,3 @@
   <img src='' alt='split images'/>
 </body>
 </html>
-
