@@ -2,7 +2,7 @@
 <html>
 <head>
   <script src='http://code.jquery.com/jquery-latest.min.js'></script>
-  <script src='color-thief.js'></script>
+  <script src='colorthief.js'></script>
   <script>
   var canvas = document.createElement('canvas'); // In memory canvas
   var ctx    = canvas.getContext("2d");
@@ -49,7 +49,7 @@
           var img = new Image();
           img.src = url;
           //$('#test'+j+''+i).prop('src',url);
-          $('body').append('<img src=\"'+url+'\" id=\"test'+i+''+j+'\" alt=\"split images\"/>');
+          $('#pieces').append('<img src=\"'+url+'\" id=\"test'+i+''+j+'\" alt=\"split images\"/>');
           img.onload = colorSearch;
       }
       parts.push( temp );     // ("image/jpeg") for jpeg
@@ -67,22 +67,28 @@
     return color;
   }
 
+  $('document').ready(function(){
+    $('body').append('');
+
+  });
+
 
   </script>
 </head>
 <style>
   img{
-    margin: 5px;
+    margin-left: 2px;
+    margin-right: 2px;
   }
 </style>
 <body>
   <input type='file' id ='fileinput' onchange='previewFile()'><br>
+
   <img src='' id='preview' alt='Image preview...'/>
   <br>
-  <!-- <img src='' id='test00' alt='split images'/>
-  <img src='' id='test01' alt='split images'/>
-  <br>
-  <img src='' id='test10' alt='split images'/>
-  <img src='' id='test11' alt='split images'/> -->
+  <div id='pieces'>
+
+  </div>
+
 </body>
 </html>
