@@ -8,6 +8,7 @@
   var ctx    = canvas.getContext("2d");
   var parts = []; //store split images (base64 url)
   var largeImage = new Image();
+  var N = 10;
 
   var file,reader;
   //upload file
@@ -31,27 +32,29 @@
   }
 
   function split_4(){
-    var w2 = largeImage.width / 2,
-        h2 = largeImage.height / 2;
+    var w2 = largeImage.width / N,
+        h2 = largeImage.height / N;
     canvas.width  = w2;
     canvas.height = h2;
 
-    for(var j=0; j<2; j++){
+    for(var j=0; j<N; j++){
       var temp = [];
-        for(var i=0; i<2; i++){
+        for(var i=0; i<N; i++){
           var x = -w2*i;
           var y = -h2*j;
-          ctx.drawImage(this, x, y, w2*2, h2*2); // img, x, y, w, h
+          ctx.drawImage(this, x, y, w2*N, h2*N); // img, x, y, w, h
           var url = canvas.toDataURL();
 
           temp.push(url);
           var img = new Image();
           img.src = url;
-          $('#test'+j+''+i).prop('src',url);
+          //$('#test'+j+''+i).prop('src',url);
+          $('body').append('<img src=\"'+url+'\" id=\"test'+i+''+j+'\" alt=\"split images\"/>');
           img.onload = colorSearch;
       }
       parts.push( temp );     // ("image/jpeg") for jpeg
-      console.log( temp );
+      console.log( temp.length );
+      $('body').append('<br>');
     }
   }
   //on each image
@@ -67,15 +70,19 @@
 
   </script>
 </head>
-
+<style>
+  img{
+    margin: 5px;
+  }
+</style>
 <body>
   <input type='file' id ='fileinput' onchange='previewFile()'><br>
   <img src='' id='preview' alt='Image preview...'/>
   <br>
-  <img src='' id='test00' alt='split images'/>
+  <!-- <img src='' id='test00' alt='split images'/>
   <img src='' id='test01' alt='split images'/>
   <br>
   <img src='' id='test10' alt='split images'/>
-  <img src='' id='test11' alt='split images'/>
+  <img src='' id='test11' alt='split images'/> -->
 </body>
 </html>
