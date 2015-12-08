@@ -1,17 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src='http://code.jquery.com/jquery-latest.min.js'></script>
 
   <script>
-  $(document).ready(function(){
 
-    $.getJSON("http://cooper-union-imagga-proxy.herokuapp.com/", function(response){
+  var parts = []; //store split images (base64 url)
+  //upload file
+  function previewFile() {
+    var file = $('#fileinput')[0].files[0];
+    var reader = new FileReader();
+
+    reader.onloadend = function () {
+      $('#preview').prop('src',reader.result);
+    }
+
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      $('#preview').prop('src', '');
+    }
+    //reader.loadend=
+    var save = 'data:image/png;base64,'+reader.result;
+
+    //find colors of an image slice
+    $.getJSON("http://cooper-union-imagga-proxy.herokuapp.com/color?image="+save, function(response){
         console.log(response);
+        //$('img').prop('src',response.results[0].image);
+      });
+  }
+
+  $(document).ready(function(){
+    // $('body').append('<img src='' alt='split images'/>');
+      });
+
   </script>
 </head>
 
 <body>
-
+  <input type='file' id ='fileinput' onchange='previewFile()'><br>
+  <img src='' id='preview' alt='Image preview...'/>
+  <img src='' alt='split images'/>
 </body>
 </html>
+
