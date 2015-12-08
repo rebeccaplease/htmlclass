@@ -2,10 +2,13 @@
 <html>
 <head>
   <script src='http://code.jquery.com/jquery-latest.min.js'></script>
-
+  <script src='color-thief.js'></script>
   <script>
-
+  var canvas = document.createElement('canvas'); // In memory canvas
+  var ctx    = canvas.getContext("2d");
   var parts = []; //store split images (base64 url)
+  var largeImage = new Image();
+
   var file,reader;
   //upload file
   function previewFile() {
@@ -14,7 +17,8 @@
 
     reader.onloadend = function () {
       $('#preview').prop('src',reader.result);
-      colorSearch();
+      largeImage.src = reader.result;
+      //colorSearch();
     }
 
     if (file) {
@@ -22,26 +26,44 @@
     } else {
       $('#preview').prop('src', '');
     }
-
+    largeImage.onload = split_4;
 
   }
+
+  function split_4(){
+    var w2 = largeImage.width / 2,
+        h2 = largeImage.height / 2;
+    canvas.width  = w2;
+    canvas.height = h2;
+
+    for(var j=0; j<2; j++){
+      var temp = [];
+        for(var i=0; i<2; i++){
+          var x = -w2*i;
+          var y = -h2*j;
+          ctx.drawImage(this, x, y, w2*2, h2*2); // img, x, y, w, h
+          var url = canvas.toDataURL();
+
+          temp.push(url);
+          var img = new Image();
+          img.src = url;
+          $('#test'+j+''+i).prop('src',url);
+          img.onload = colorSearch;
+      }
+      parts.push( temp );     // ("image/jpeg") for jpeg
+      console.log( temp );
+    }
+  }
+  //on each image
+  //colorSearch(img);
+
   function colorSearch() {
-    var save = 'data:image/png;base64,'+reader.result;
-
-    //find colors of an image slice
-    $.getJSON("http://cooper-union-imagga-proxy.herokuapp.com/color?image="+save, function(response){
-        console.log(response);
-        //$('img').prop('src',response.results[0].image);
-      });
+    var colorThief = new ColorThief();
+    var color = colorThief.getColor(this);
+    console.log(color);
+    return color;
   }
 
-  $(document).ready(function(){
-    // $('body').append('<img src='' alt='split images'/>');
-
-
-
-
-      });
 
   </script>
 </head>
@@ -49,6 +71,11 @@
 <body>
   <input type='file' id ='fileinput' onchange='previewFile()'><br>
   <img src='' id='preview' alt='Image preview...'/>
-  <img src='' alt='split images'/>
+  <br>
+  <img src='' id='test00' alt='split images'/>
+  <img src='' id='test01' alt='split images'/>
+  <br>
+  <img src='' id='test10' alt='split images'/>
+  <img src='' id='test11' alt='split images'/>
 </body>
 </html>
