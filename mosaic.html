@@ -36,9 +36,9 @@
     canvas.width  = w2;
     canvas.height = h2;
 
-    for(var i=0; i<2; i++){
+    for(var j=0; j<2; j++){
       var temp = [];
-        for(var j=0; j<2; j++){
+        for(var i=0; i<2; i++){
           var x = -w2*i;
           var y = -h2*j;
           ctx.drawImage(this, x, y, w2*2, h2*2); // img, x, y, w, h
@@ -47,7 +47,7 @@
           temp.push(url);
           var img = new Image();
           img.src = url;
-          $('#test'+i+''+j).prop('src',url);
+          $('#test'+j+''+i).prop('src',url);
           img.onload = colorSearch;
       }
       parts.push( temp );     // ("image/jpeg") for jpeg
