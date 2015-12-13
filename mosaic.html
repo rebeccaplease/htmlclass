@@ -101,17 +101,19 @@
   //store instagram images and color
   var insta = [];
   var count = 0; //for number of callbacks
-  function colorSearchInsta() {
+  function colorSearchInsta(img) {
 
     var colorThief = new ColorThief();
-    var color = colorThief.getColor(this);
-    //append to array of
+    var color = colorThief.getColor(img);
+    //append to array of imageobjects
     for(var i = 0; i < insta.length; i++){
-      if(insta[i].url == this.src){
+    //for(var i=insta.length-1; i>=0; i--) {
+      if(insta[i].url == img.src){
         insta[i].r = color[0];
         insta[i].g = color[1];
         insta[i].b = color[2];
-        //console.log(i);
+        console.log(i);
+
         break;
       }
     }
@@ -141,11 +143,9 @@
       //$.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerm+"?count=100",fillInstaCallback);
       var numTerms = 2;
       var deferreds = getInstagramResults(numTerms);
-      // $.when.apply(null, deferreds).done(function() {
-      //     $("div").append("<p>All done!</p>");
-      //   });
+
       $.when.apply(null, deferreds).done(function() {
-          console.log('searches complete! :D')
+          console.log('instagram searches complete! :D');
           //assign and compare images
 
         });
@@ -153,30 +153,50 @@
     });
 
   function fillInstaCallback(response){
+    var deferreds = [];
       for(var i=0; i<response.length; i++) {
         //
         var img = new Image();
         img.crossOrigin = "Anonymous";
 
-        img.onload = colorSearchInsta;
+        //img.onload = colorSearchInsta;
+        img.onload = function(){
+          //deferreds.push(colorSearchInsta(this));
+          var temp = colorSearchInsta(this);
+          deferreds.push(temp);
+        }
+        //img.onload = deferreds.push(colorSearchInsta(img));
 
         var url = response[i].images.thumbnail.url;
         img.src = url;
 
         insta.push(new ImageObject(url, -1, -1, response[i].link));
+        //console.log(i);
       }
+      return deferreds;
     }
   function getInstagramResults(numTerms) {
-      var deferreds = [];
+      var def = [];
       var searchTerm = 'nyc';
       for (var i = 0; i < numTerms; i++) {
 
-        deferreds.push(
+        def.push(
           $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerm+"?count=100", fillInstaCallback)
         );
+        // $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerm+"?count=100", function(response){
+        //   def.push(fillInstaCallback(response));
+        // });
+
         searchTerm = 'cats';
       }
-      return deferreds;
+      //var deferreds = def;
+
+      $.when.apply(null, def).done(function() {
+          console.log('color searches complete! :D');
+          //assign and compare images
+
+        });
+      //return deferreds;
   }
 
 
