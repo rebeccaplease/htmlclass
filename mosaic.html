@@ -106,7 +106,7 @@
   function compare(alpha,beta) {
     // var aDist = sqrt(alpha.r*alpha.r + alpha.g*alpha.g + alpha.b*alpha.b);
     // var bDist = sqrt(beta.r*beta.r + beta.g*beta.g + beta.b*beta.b);
-    var distance = sqrt(Math.pow(alpha.r-beta.r,2) + Math.pow(alpha.g-beta.g,2) + Math.pow(alpha.b-beta.b,2))
+    var distance = Math.sqrt(Math.pow(alpha.r-beta.r,2) + Math.pow(alpha.g-beta.g,2) + Math.pow(alpha.b-beta.b,2))
     return distance;
   }
 
@@ -121,8 +121,8 @@
 
       var numTerms = 2;
       //get searchTerms from a box or something
-      var searchTerms = [];
-      getInstagramResults(numTerms, searchTerms);
+      var searchTerms = ['fish','cats','dogs'];
+      getInstagramResults(searchTerms);
 
       });
     });
@@ -138,19 +138,26 @@
           insta[i].r = color[0];
           insta[i].g = color[1];
           insta[i].b = color[2];
-          console.log(i);
+          //console.log(i);
           break;
         }
       }
       return color;
     }
+    function compareIndex(a,b){
+      if (a.y == b.y) {
+        return a.x - b.x;
+      }
+      return a.y - b.y;
+    }
 
   //called for each instagram search
   //boolColor true when last instagram search is completed
   var deferreds = [];
+  var mosaic = [];
   function fillInstaCallback(response, boolColor){
       var count = 0;
-      for(var i=0; i<response.length; i++) {
+      for(var i = 0; i<response.length; i++) {
         var img = new Image();
         img.crossOrigin = "Anonymous";
 
@@ -158,22 +165,59 @@
         //call colorSearchInsta on array of all downloaded images
         //returns array of deferred objects
 
-        //call colorsearchinsta now all images have been downloaded
-        //loop through image array and call colorSearchInsta
-        //push to def
         img.onload = function(){
             count++;
+            //var c =colorSearchInsta(this);
             deferreds.push(colorSearchInsta(this));
 
             //on the last image
             if(boolColor && (count==response.length-1)){
 
               $.when.apply(null, deferreds).done(function() {
-                  console.log('color searches complete! :D');
-                //assign and compare images
+                console.log('color searches complete! :D');
+                //assign and compare images'
+                //call colorsearchinsta now all images have been downloaded
+                //for each element in the image array, compare to the instagram array
+                for(var k = 0; k < parts.length; k++){
+                  //insta index of best match
+                  var min = -1;
+                  //value of best match
+                  var last = 1000;
+                  for(var j = 0; j < insta.length; j++){
+                    //find closest distance to current image k
+                    var dist = compare(parts[k],insta[j]);
+                    if(dist < last){
+                      //save value
+                      last = dist;
+                      //save index
+                      min = j;
+                    }
+                  }
+                  //insta[min].x = parts[k].x;
+                  //insta[min].y = parts[k].y;
+                  //mosaic.push(insta[min]);
+                  mosaic.push(new ImageObject(insta[min].url, parts[k].x, parts[k].y, insta[min].link, ''))
+                }
+                //sort mosaic array by index
+                //console.log(mosaic);
+                mosaic.sort(compareIndex);
+                //console.log(mosaic);
+
+                //display onto page
+                var Nx = Math.floor(largeImage.width / size);
+                for(var n = 0; n < mosaic.length; n++){
+                  $('#mosaic').append('<img src=\"'+mosaic[n].url+'\" id=\"yay'+mosaic[n].x+''+mosaic[n].y+'\" alt=\"mosaic images\"/>');
+                  if(mosaic[n].x >= Nx-1){
+                    $('#mosaic').append('<br>');
+                  }
+                  //click on brings to instagram url
+                }
+
               });
             }
+            //return c;
           }
+          //deferreds.push(img.onload);
 
         var url = response[i].images.thumbnail.url;
         img.src = url;
@@ -183,24 +227,14 @@
         //console.log(i);
       }
     }
-  function getInstagramResults(numTerms, searchTerms) {
-      //var def = [];
-      var searchTerm = 'nyc';
-      var count = 0;
-
-      for (var i = 0; i < numTerms; i++) {
-
-        // def.push(
-        //   $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerm+"?count=100", fillInstaCallback)
-        // );
-        $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerm+"?count=100", function(response){
-          //console.log(count, numTerms);
-          fillInstaCallback(response, count++ == numTerms-1);
-        });
-        //$.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerm+"?count=100", fillInstaCallback);
-
-        searchTerm = 'cats';
-      }
+  function getInstagramResults(searchTerms) {
+    var count = 0;
+    for (var i = 0; i < searchTerms.length; i++) {
+      $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerms[i]+"?count=100", function(response){
+        //console.log(count, numTerms);
+        fillInstaCallback(response, count++ == searchTerms.length-1);
+      });
+    }
   }
 
   </script>
@@ -209,6 +243,8 @@
   img{
     margin-left: 2px;
     margin-right: 2px;
+    width: 50px;
+    height: 50px;
   }
 </style>
 <body>
@@ -220,6 +256,9 @@
 
   </div>
   <button id='create'>Generate mosaic!</button>
+  <div id='mosaic'>
+
+  </div>
 
 </body>
 </html>
