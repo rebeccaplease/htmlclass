@@ -8,7 +8,9 @@
   var ctx    = canvas.getContext("2d");
   var parts = []; //store split images (base64 url)
   var largeImage = new Image();
-  var N = 10;
+  var size = 100; //px
+
+  var
 
   var file,reader;
   //upload file
@@ -27,38 +29,48 @@
     } else {
       $('#preview').prop('src', '');
     }
-    largeImage.onload = split_4;
+    largeImage.onload = split_N;
 
   }
 
-  function split_4(){
-    var w2 = largeImage.width / N,
-        h2 = largeImage.height / N;
-    canvas.width  = w2;
-    canvas.height = h2;
+  function split_N(){
+    var Nx = Math.floor(largeImage.width / size),
+        Ny = Math.floor(largeImage.height / size);
+    var offsetX = largeImage.width % size;
+    var offsetY = largeImage.height % size; //calculate offset for image
+    canvas.width  = size;
+    canvas.height = size;
+    console.log('width: ', largeImage.width, 'height: ', largeImage.height);
+    console.log('offset x: ', offsetX, 'offset y: ', offsetY);
+    console.log('Num x: ', Nx, 'Num y: ', Ny);
 
-    for(var j=0; j<N; j++){
+    for(var j=0; j<Ny; j++){
       var temp = [];
-        for(var i=0; i<N; i++){
-          var x = -w2*i;
-          var y = -h2*j;
-          ctx.drawImage(this, x, y, w2*N, h2*N); // img, x, y, w, h
+        for(var i=0; i<Nx; i++){
+          var x = -size*i - offsetX/2.0;
+          var y = -size*j - offsetY/2.0;
+          ctx.drawImage(this, x, y, size*Nx+offsetX, size*Ny+offsetY); // img, x, y, w, h
+          // var x = -size*i;
+          // var y = -size*j;
+          // ctx.drawImage(this, x, y, size*Nx, size*Ny); // img, x, y, w, h
+
           var url = canvas.toDataURL();
 
           temp.push(url);
           var img = new Image();
           img.src = url;
           //$('#test'+j+''+i).prop('src',url);
-          $('body').append('<img src=\"'+url+'\" id=\"test'+i+''+j+'\" alt=\"split images\"/>');
+           $('#pieces').append('<img src=\"'+url+'\" id=\"test'+i+''+j+'\" alt=\"split images\"/>');
           img.onload = colorSearch;
       }
       parts.push( temp );     // ("image/jpeg") for jpeg
       console.log( temp.length );
-      $('body').append('<br>');
+      $('#pieces').append('<br>');
     }
   }
   //on each image
   //colorSearch(img);
+  //separate function for retrived 
 
   function colorSearch() {
     var colorThief = new ColorThief();
@@ -67,22 +79,29 @@
     return color;
   }
 
+  $('document').ready(function(){
 
+    $('#create').click(function(){
+      $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/nyc?count=100", function(response){
+
+      });
+    });
+  });
   </script>
 </head>
 <style>
   img{
-    margin: 5px;
+    margin-left: 2px;
+    margin-right: 2px;
   }
 </style>
 <body>
   <input type='file' id ='fileinput' onchange='previewFile()'><br>
   <img src='' id='preview' alt='Image preview...'/>
   <br>
-  <!-- <img src='' id='test00' alt='split images'/>
-  <img src='' id='test01' alt='split images'/>
-  <br>
-  <img src='' id='test10' alt='split images'/>
-  <img src='' id='test11' alt='split images'/> -->
+  <div id='pieces'>
+
+  </div>
+  <button id='create'>Generate mosaic!</button>
 </body>
 </html>
