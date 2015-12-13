@@ -12,11 +12,12 @@
 
   //hold image objects
   var parts = []; //store split images (base64 url)
-  function ImageObject(dataUrl, i, j, link) {
+  function ImageObject(dataUrl, i, j, link, img) {
     this.url = dataUrl;
     this.x = i;
     this.y = j;
     this.link = link;
+    this.img = img;
     // this.r
     // this.g
     // this.b
@@ -69,7 +70,7 @@
           var img = new Image();
           img.src = url;
 
-          parts.push(new ImageObject(url, i, j, ''));
+          parts.push(new ImageObject(url, i, j, '', null));
           $('#pieces').append('<img src=\"'+url+'\" id=\"test'+i+''+j+'\" alt=\"split images\"/>');
 
           img.onload = colorSearch;
@@ -100,23 +101,6 @@
   }
   //store instagram images and color
   var insta = [];
-  var count = 0; //for number of callbacks
-  function colorSearchInsta() {
-
-    var colorThief = new ColorThief();
-    var color = colorThief.getColor(this);
-    //append to array of
-    for(var i = 0; i < insta.length; i++){
-      if(insta[i].url == this.src){
-        insta[i].r = color[0];
-        insta[i].g = color[1];
-        insta[i].b = color[2];
-        //console.log(i);
-        break;
-      }
-    }
-    return color;
-  }
 
   //compare image colors
   function compare(alpha,beta) {
@@ -126,8 +110,6 @@
     return distance;
   }
 
-
-
   //enter two imageobjects, return color difference
   $('document').ready(function(){
     $('#create').click(function(){
@@ -136,50 +118,90 @@
       //max 5
       //default term is nyc
       //33 limit
-      //$.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerm+"?count=100", fillInstaCallback);
-        //searchTerm = 'cats';
-      //$.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerm+"?count=100",fillInstaCallback);
-      var numTerms = 2;
-      var deferreds = getInstagramResults(numTerms);
-      // $.when.apply(null, deferreds).done(function() {
-      //     $("div").append("<p>All done!</p>");
-      //   });
-      $.when.apply(null, deferreds).done(function() {
-          console.log('searches complete! :D')
-          //assign and compare images
 
-        });
+      var numTerms = 2;
+      //get searchTerms from a box or something
+      var searchTerms = [];
+      getInstagramResults(numTerms, searchTerms);
+
       });
     });
 
-  function fillInstaCallback(response){
+  function colorSearchInsta(img) {
+    var colorThief = new ColorThief();
+    var color = colorThief.getColor(img);
+      //append to array of imageobjects
+      //search through entire downloaded array of images
+    for(var i = 0; i < insta.length; i++){
+    //for(var i = insta.length; i >= 0; i--){
+        if(insta[i].url == img.src){
+          insta[i].r = color[0];
+          insta[i].g = color[1];
+          insta[i].b = color[2];
+          console.log(i);
+          break;
+        }
+      }
+      return color;
+    }
+
+  //called for each instagram search
+  //boolColor true when last instagram search is completed
+  var deferreds = [];
+  function fillInstaCallback(response, boolColor){
+      var count = 0;
       for(var i=0; i<response.length; i++) {
-        //
         var img = new Image();
         img.crossOrigin = "Anonymous";
 
-        img.onload = colorSearchInsta;
+
+        //call colorSearchInsta on array of all downloaded images
+        //returns array of deferred objects
+
+        //call colorsearchinsta now all images have been downloaded
+        //loop through image array and call colorSearchInsta
+        //push to def
+        img.onload = function(){
+            count++;
+            deferreds.push(colorSearchInsta(this));
+
+            //on the last image
+            if(boolColor && (count==response.length-1)){
+
+              $.when.apply(null, deferreds).done(function() {
+                  console.log('color searches complete! :D');
+                //assign and compare images
+              });
+            }
+          }
 
         var url = response[i].images.thumbnail.url;
         img.src = url;
 
-        insta.push(new ImageObject(url, -1, -1, response[i].link));
+        insta.push(new ImageObject(url, -1, -1, response[i].link, img));
+
+        //console.log(i);
       }
     }
-  function getInstagramResults(numTerms) {
-      var deferreds = [];
+  function getInstagramResults(numTerms, searchTerms) {
+      //var def = [];
       var searchTerm = 'nyc';
+      var count = 0;
+
       for (var i = 0; i < numTerms; i++) {
 
-        deferreds.push(
-          $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerm+"?count=100", fillInstaCallback)
-        );
+        // def.push(
+        //   $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerm+"?count=100", fillInstaCallback)
+        // );
+        $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerm+"?count=100", function(response){
+          //console.log(count, numTerms);
+          fillInstaCallback(response, count++ == numTerms-1);
+        });
+        //$.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerm+"?count=100", fillInstaCallback);
+
         searchTerm = 'cats';
       }
-      return deferreds;
   }
-
-
 
   </script>
 </head>
