@@ -79,6 +79,8 @@
       //console.log( temp.length );
       $('#pieces').append('<br>');
     }
+    //enable generate button
+    $('#create').removeClass();
   }
   //on each image
   //colorSearch(img);
@@ -246,6 +248,9 @@
     width: 50px;
     height: 50px;
   }
+  .hide{
+    visibility: hidden;
+  }
 </style>
 <body>
   <input type='file' id ='fileinput' onchange='previewFile()'><br>
@@ -255,7 +260,7 @@
   <div id='pieces'>
 
   </div>
-  <button id='create'>Generate mosaic!</button>
+  <button id='create' class='hide'>Generate mosaic!</button>
   <div id='mosaic'>
 
   </div>
