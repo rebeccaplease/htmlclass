@@ -2,7 +2,7 @@
 <html>
 <head>
   <script src='http://code.jquery.com/jquery-latest.min.js'></script>
-  <script src='color-thief.js'></script>
+  <script src='colorthief.js'></script>
   <script>
   var canvas = document.createElement('canvas'); // In memory canvas
   var ctx    = canvas.getContext("2d");
@@ -60,7 +60,8 @@
           var img = new Image();
           img.src = url;
           //$('#test'+j+''+i).prop('src',url);
-           $('#pieces').append('<img src=\"'+url+'\" id=\"test'+i+''+j+'\" alt=\"split images\"/>');
+          $('#pieces').append('<img src=\"'+url+'\" id=\"test'+i+''+j+'\" alt=\"split images\"/>');
+
           img.onload = colorSearch;
       }
       parts.push( temp );     // ("image/jpeg") for jpeg
@@ -70,7 +71,7 @@
   }
   //on each image
   //colorSearch(img);
-  //separate function for retrived 
+  //separate function for retrived
 
   function colorSearch() {
     var colorThief = new ColorThief();
@@ -81,8 +82,14 @@
 
   $('document').ready(function(){
 
+
     $('#create').click(function(){
       $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/nyc?count=100", function(response){
+
+    $('body').append('');
+
+  });
+
 
       });
     });
@@ -97,11 +104,13 @@
 </style>
 <body>
   <input type='file' id ='fileinput' onchange='previewFile()'><br>
+
   <img src='' id='preview' alt='Image preview...'/>
   <br>
   <div id='pieces'>
 
   </div>
   <button id='create'>Generate mosaic!</button>
+
 </body>
 </html>
