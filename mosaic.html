@@ -12,10 +12,11 @@
 
   //hold image objects
   var parts = []; //store split images (base64 url)
-  function ImageObject(dataUrl, i, j) {
+  function ImageObject(dataUrl, i, j, link) {
     this.url = dataUrl;
     this.x = i;
     this.y = j;
+    this.link = link;
     // this.r
     // this.g
     // this.b
@@ -68,7 +69,7 @@
           var img = new Image();
           img.src = url;
 
-          parts.push(new ImageObject(url, i, j));
+          parts.push(new ImageObject(url, i, j, ''));
           $('#pieces').append('<img src=\"'+url+'\" id=\"test'+i+''+j+'\" alt=\"split images\"/>');
 
           img.onload = colorSearch;
@@ -91,17 +92,54 @@
         parts[i].r = color[0];
         parts[i].g = color[1];
         parts[i].b = color[2];
-        console.log(i);
+        //console.log(i);
         break;
       }
-    //}
+    }
     return color;
   }
+  //store instagram images and color
+  var insta = [];
+
+  function colorSearchInsta() {
+    var colorThief = new ColorThief();
+    var color = colorThief.getColor(this);
+    //append to array of
+    for(var i = 0; i < insta.length; i++){
+      if(insta[i].url == this.src){
+        insta[i].r = color[0];
+        insta[i].g = color[1];
+        insta[i].b = color[2];
+        //console.log(i);
+        break;
+      }
+    }
+    return color;
+  }
+  //enter two imageobjects, return color difference
 
   $('document').ready(function(){
-
     $('#create').click(function(){
+      var searchTerm = 'nyc';
+      //for loop to search through entered terms
+      //max 5
+      //default term is nyc
       $.getJSON("http://cooper-union-instagram-proxy.herokuapp.com/search/tag/"+searchTerm+"?count=100", function(response){
+        for(var i=0; i<response.length; i++) {
+          //
+          var img = new Image();
+          img.crossOrigin = "Anonymous";
+
+          img.onload = colorSearchInsta;
+
+          var url = response[i].images.thumbnail.url;
+          img.src = url;
+
+          insta.push(new ImageObject(url, -1, -1, response[i].link));
+
+
+        }
+
 
 
       });
