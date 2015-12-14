@@ -24,8 +24,8 @@ function loading() {
       //      '<img id="loading" src="http://bit.ly/pMtW1K">' +
       //      '</div>';
        var over = $('<div>',{
-         id: 'overlay'//,
-         //text: 'loading...'
+         id: 'overlay',
+         html: 'loading...'
        });
        var img = $('<img>',{
          id: 'loading',
