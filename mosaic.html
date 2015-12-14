@@ -8,7 +8,7 @@
   var ctx    = canvas.getContext("2d");
 
   var largeImage = new Image();
-  var size = 50; //px
+  var size = 20; //px
 
   //hold image objects
   var parts = []; //store split images (base64 url)
@@ -22,7 +22,6 @@
     // this.r
     // this.g
     // this.b
-
   }
 
   var file,reader;
@@ -60,6 +59,11 @@
 
     for(var j=0; j<Ny; j++){
       var temp = [];
+      var div = $('<div>',{
+        id: 'rowImg'+j,
+        class: 'row'
+      });
+      div.appendTo($('#pieces'));
         for(var i=0; i<Nx; i++){
           var x = -size*i - offsetX/2.0;
           var y = -size*j - offsetY/2.0;
@@ -75,16 +79,20 @@
 
           img.src = url;
 
-          $('#pieces').append('<img src=\"'+url+'\" id=\"test'+i+''+j+'\" alt=\"split images\"/>');
-
-
+          //$('#pieces').append('<img src=\"'+url+'\" id=\"test'+i+''+j+'\" alt=\"split images\"/>');
+          var piece = $('<img />',{
+            src: url,
+            id: 'test'+i+j,
+            alt: 'split images'
+          });
+          piece.appendTo('#rowImg'+j);
       }
       //parts.push( temp );     // ("image/jpeg") for jpeg
       //console.log( temp.length );
-      $('#pieces').append('<br>');
+      //$('#pieces').append('<br>');
     }
     //enable generate button
-    $('#create').removeClass();
+     $('#create').removeClass();
   }
   //assigns color to uploaded image using color-thief.js
   function colorSearch() {
@@ -92,15 +100,20 @@
     var color = colorThief.getColor(this);
     //console.log(this.src);
     //find array position of image and append color to
-    for(var i = 0; i < parts.length; i++){
-      if(parts[i].url == this.src && !parts[i].hasColor){
-        parts[i].r = color[0];
-        parts[i].g = color[1];
-        parts[i].b = color[2];
-        parts[i].hasColor = true;
-        console.log(i);
-        break;
-      }
+    //var assigned = false;
+    //while(!assigned){
+      for(var i = 0; i < parts.length; i++){
+        if(parts[i].url == this.src && !parts[i].hasColor){
+          parts[i].hasColor = true;
+          parts[i].r = color[0];
+          parts[i].g = color[1];
+          parts[i].b = color[2];
+
+          //console.log(i);
+          //assigned = true;
+          break;
+        }
+      //}
     }
     return color;
   }
@@ -130,13 +143,14 @@
       getInstagramResults(searchTerms);
       $(this).prop('disabled',true);
       $(this).html('loading...');
-      });
+    });
       //clicking on image opens instagram link in new page
 
       $('#mosaic').on('click', '.mo', function(){
         //open instagram link
-        console.log('clicked', $(this).prop('alt'));
+        //console.log('clicked', $(this).prop('alt'));
         window.open($(this).prop('alt'),'_blank');
+        //or clear everything and perform division and search again
       });
     });
 
@@ -198,6 +212,13 @@
                   var last = 100000;
                   for(var j = 0; j < insta.length; j++){
                     //find closest distance to current image k
+                    //if no color assigned, take from previous k
+                    if(!parts[k].hasColor){
+                      parts[k].r = parts[k-1].r;
+                      parts[k].g = parts[k-1].g;
+                      parts[k].b = parts[k-1].b;
+                      parts[k].hasColor = true;
+                    }
                     var dist = compare(parts[k],insta[j]);
                     if(dist < last){
                       //save value
@@ -206,8 +227,8 @@
                       min = j;
                     }
                   }
-                  console.log(k,min,last);
-                  console.log(insta[min]);
+                  //console.log(k,min,last);
+                  //console.log(insta[min]);
                   mosaic.push(new ImageObject(insta[min].url, parts[k].x, parts[k].y, insta[min].link, ''))
                 }
                 //sort mosaic array by index
@@ -216,21 +237,26 @@
                 //console.log(mosaic);
 
                 //display onto page
+
                 var Nx = Math.floor(largeImage.width / size);
                 for(var n = 0; n < mosaic.length; n++){
                   //$('#mosaic').append('<img src=\"'+mosaic[n].url+'\" id=\"yay'+mosaic[n].x+''+mosaic[n].y+'\" alt=\"mosaic images\"/>');
-                  var mo = $('<img />',
-                    {
+                  //create new row div for new line
+                  if(mosaic[n].x == 0){
+                    var div = $('<div>',{
+                      id: 'rowMosaic'+mosaic[n].y,
+                      class: 'row'
+                    });
+                    div.appendTo($('#mosaic'));
+                  }
+                  var mo = $('<img />',{
                       id: 'mo'+mosaic[n].x+''+mosaic[n].y,
-                      class: 'mo',
                       src: mosaic[n].url,
                       alt: mosaic[n].link
                     });
-                  mo.appendTo('#mosaic');
+                  mo.appendTo('#rowMosaic'+mosaic[n].y);
 
-                  if(mosaic[n].x >= Nx-1){
-                    $('#mosaic').append('<br>');
-                  }
+
                   //click on brings to instagram url
                 }
 
@@ -260,13 +286,19 @@
 </head>
 <style>
   #pieces img, #mosaic img{
-    margin-left: 2px;
-    margin-right: 2px;
-    width: 50px;
-    height: 50px;
+    /*margin-left: 2px;
+    margin-right: 2px;*/
+    margin: 0;
+    width: 20px;
+    height: 20px;
   }
   .hide{
     visibility: hidden;
+  }
+  .row{
+    line-height: 0;
+    float: left;
+    clear: both;
   }
 </style>
 <body>
