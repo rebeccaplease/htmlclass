@@ -2,7 +2,7 @@ var canvas = document.createElement('canvas'); // In memory canvas
 var ctx    = canvas.getContext("2d");
 
 var largeImage = new Image();
-var size = 30; //px
+var size = 20; //px
 
 //hold image objects
 var parts = []; //store split images (base64 url)

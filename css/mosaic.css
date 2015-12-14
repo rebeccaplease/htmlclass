@@ -1,5 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=VT323');
+@import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono');
+
+*, input[type=file]{
+
+  /*font-family: 'VT323';*/
+  font-family: 'Share Tech Mono';
+}
 body{
-  
+  background-color: #4d4d4d;
+  color: #e6e6e6;
+}
+#create{
+  color: #1a1a1a;
 }
 #pieces img, #mosaic img{
   /*margin-left: 2px;
