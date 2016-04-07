@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<head>
+    <script src='http://code.jquery.com/jquery-latest.min.js'></script>
+</head>
+<script>
+    subject = ["I ", "The fat cat ", "The old lady ", "The rabid squirrel "]
+    verb = ["ate ", "dropped ", "forgot ", "broke ", "stole "]
+    object = ["a sweaty dog. ", "my wallet and keys. ", "the tree in front of my house. ", "my homework. "]
+    emoticon = [":\)", ";\)", ":\("]
+    $(document).ready(function(){
+        generateExcuse();
+        $('#button').click(function(){
+            generateExcuse();
+            console.log("hello")
+        });
+    });
+    function generateExcuse(){
+        randS = randNum(subject.length)
+        randV = randNum(verb.length)
+        randO = randNum(object.length)
+        randE = randNum(emoticon.length)
+
+        sen = subject[randS].concat(verb[randV], object[randO], emoticon[randE])
+        $('#sentence').text(sen);
+    }
+    function randNum(n){
+        return Math.floor(Math.random()*n)
+    }
+</script>
+
+<body>
+    <h1>Excuse generator</h1>
+    <p id = "sentence"></p>
+    <button id = "button">Generate Excuse</button>
+</body>
+<style>
+    body{
+        font-family: monospace;
+        background-color: LightGray;
+    }
+</style>
+
+</html>
