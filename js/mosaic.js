@@ -17,6 +17,23 @@ function ImageObject(dataUrl, i, j, link, img) {
   // this.g
   // this.b
 }
+//loading overlay
+function loading() {
+       // add the overlay with loading image to the page
+      //  var over = '<div id="overlay">' +
+      //      '<img id="loading" src="http://bit.ly/pMtW1K">' +
+      //      '</div>';
+       var over = $('<div>',{
+         id: 'overlay',
+         html: 'loading...'
+       });
+       var img = $('<img>',{
+         id: 'loading',
+         src: 'http://bit.ly/pMtW1K'
+       });
+       $(img).appendTo(over);
+       $(over).appendTo('body');
+   };
 
 var file,reader;
 //upload file
@@ -42,6 +59,7 @@ function previewFile() {
 //split uploaded image into size squares
 var def = [];
 function split_N(){
+  loading();
   $('#create').html('Analyzing colors...');
   var Nx = Math.floor(largeImage.width / size),
       Ny = Math.floor(largeImage.height / size);
@@ -79,6 +97,7 @@ function split_N(){
               //enable button
               $('#create').html('Generate mosaic!');
               $('#create').prop('disabled', false);
+              $('#overlay').remove();
             });
           }
 
@@ -149,6 +168,7 @@ $('document').ready(function(){
     getInstagramResults(searchTerms);
     $(this).prop('disabled',true);
     $(this).html('loading...');
+
   });
     //clicking on image opens instagram link in new page
 
